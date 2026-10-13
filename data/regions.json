@@ -153,91 +153,91 @@
 "code": "26110",
 "sido": "부산광역시",
 "name": "중구",
-"ready": false
+"ready": true
 },
 {
 "code": "26140",
 "sido": "부산광역시",
 "name": "서구",
-"ready": false
+"ready": true
 },
 {
 "code": "26170",
 "sido": "부산광역시",
 "name": "동구",
-"ready": false
+"ready": true
 },
 {
 "code": "26200",
 "sido": "부산광역시",
 "name": "영도구",
-"ready": false
+"ready": true
 },
 {
 "code": "26230",
 "sido": "부산광역시",
 "name": "부산진구",
-"ready": false
+"ready": true
 },
 {
 "code": "26260",
 "sido": "부산광역시",
 "name": "동래구",
-"ready": false
+"ready": true
 },
 {
 "code": "26290",
 "sido": "부산광역시",
 "name": "남구",
-"ready": false
+"ready": true
 },
 {
 "code": "26320",
 "sido": "부산광역시",
 "name": "북구",
-"ready": false
+"ready": true
 },
 {
 "code": "26350",
 "sido": "부산광역시",
 "name": "해운대구",
-"ready": false
+"ready": true
 },
 {
 "code": "26380",
 "sido": "부산광역시",
 "name": "사하구",
-"ready": false
+"ready": true
 },
 {
 "code": "26410",
 "sido": "부산광역시",
 "name": "금정구",
-"ready": false
+"ready": true
 },
 {
 "code": "26440",
 "sido": "부산광역시",
 "name": "강서구",
-"ready": false
+"ready": true
 },
 {
 "code": "26470",
 "sido": "부산광역시",
 "name": "연제구",
-"ready": false
+"ready": true
 },
 {
 "code": "26500",
 "sido": "부산광역시",
 "name": "수영구",
-"ready": false
+"ready": true
 },
 {
 "code": "26530",
 "sido": "부산광역시",
 "name": "사상구",
-"ready": false
+"ready": true
 },
 {
 "code": "27110",
@@ -399,25 +399,25 @@
 "code": "31110",
 "sido": "울산광역시",
 "name": "중구",
-"ready": false
+"ready": true
 },
 {
 "code": "31140",
 "sido": "울산광역시",
 "name": "남구",
-"ready": false
+"ready": true
 },
 {
 "code": "31170",
 "sido": "울산광역시",
 "name": "동구",
-"ready": false
+"ready": true
 },
 {
 "code": "31200",
 "sido": "울산광역시",
 "name": "북구",
-"ready": false
+"ready": true
 },
 {
 "code": "36110",
@@ -795,43 +795,43 @@
 "code": "48220",
 "sido": "경상남도",
 "name": "통영시",
-"ready": false
+"ready": true
 },
 {
 "code": "48240",
 "sido": "경상남도",
 "name": "사천시",
-"ready": false
+"ready": true
 },
 {
 "code": "48250",
 "sido": "경상남도",
 "name": "김해시",
-"ready": false
+"ready": true
 },
 {
 "code": "48270",
 "sido": "경상남도",
 "name": "밀양시",
-"ready": false
+"ready": true
 },
 {
 "code": "48310",
 "sido": "경상남도",
 "name": "거제시",
-"ready": false
+"ready": true
 },
 {
 "code": "48330",
 "sido": "경상남도",
 "name": "양산시",
-"ready": false
+"ready": true
 },
 {
 "code": "48120",
 "sido": "경상남도",
 "name": "창원시",
-"ready": false
+"ready": true
 },
 {
 "code": "50110",
