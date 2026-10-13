@@ -1,9 +1,9 @@
 # korea-city-builder
 
-한국의 시·자치구를 3D 도시 모형으로 띄우고, 공공 건물만 남긴 빈 땅에 아파트·주택·상가·학교·공원·여가·생활·직장·배송 시설을 직접 지어 보는 웹 페이지예요.
+한국의 시·자치구를 도시 모형으로 띄우고, 공공 건물만 남긴 빈 땅에 아파트·주택·상가·학교·공원·여가·생활·직장·배송 시설을 직접 지어 보는 웹 페이지예요.
 
 - 페이지: https://yurmung.github.io/korea-city-builder/
-- 지금 열 수 있는 지역: 경상남도 진주시 (다른 시·자치구는 순차 추가 예정)
+- 지금 열 수 있는 지역: 경상남도 내 시, 자치구 (다른 시·자치구는 순차 추가 예정)
 
 ## 폴더 구조
 
@@ -19,12 +19,6 @@ data/                 지역 데이터 (페이지가 raw.githubusercontent.com�
     roads.bin         도로·철도 선 데이터
     buildings.bin     실제 도시 보기용 건물 외곽선과 높이
 ```
-
-새 지역을 추가할 때는 `data/<코드>/`에 다섯 파일을 넣고 `regions.json`에서 그 지역의 `ready`를 `true`로 바꾸면 돼요. 페이지는 고치지 않아도 돼요.
-
-## GitHub Pages 설정
-
-Settings → Pages → Source: **Deploy from a branch**, Branch: **main**, 폴더: **/docs**
 
 ## 데이터 출처
 
