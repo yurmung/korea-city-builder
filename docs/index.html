@@ -3,7 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>진주 도시 짓기</title>
+<meta name="description" content="실제 지형과 도로 위에 공공시설만 남긴 3D 도시 모형에 직접 건물을 지어 보세요.">
+<meta property="og:title" content="도시 짓기">
+<meta property="og:description" content="실제 지형과 도로 위에 공공시설만 남긴 3D 도시 모형에 직접 건물을 지어 보세요.">
+<meta property="og:type" content="website">
+<title>도시 짓기</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
@@ -152,6 +156,47 @@ body.night .plbl::before { color: #d9c9a6; }
 .chipbtn .n { font-family: var(--font-mono); font-size: 10px; opacity: .7; margin-right: 4px; }
 #compassNeedle { transition: none; transform-origin: 12px 12px; }
 
+/* search */
+.search { position: relative; }
+.search input { font: inherit; font-size: 14px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 7px; padding: 7px 9px 7px 30px; width: 100%; box-sizing: border-box; }
+.search svg { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--muted); pointer-events: none; }
+#results { position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 9; max-height: 300px; overflow-y: auto; padding: 4px; }
+#results button { display: flex; width: 100%; gap: 8px; align-items: baseline; text-align: left; font: inherit; font-size: 13px; color: var(--ink); background: transparent; border: 0; border-radius: 6px; padding: 7px 8px; cursor: pointer; }
+#results button:hover, #results button[aria-selected="true"] { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+#results small { color: var(--muted); font-size: 11px; margin-left: auto; white-space: nowrap; }
+#results .empty { color: var(--muted); font-size: 12px; padding: 8px; }
+#mineBtn[data-hidden] { visibility: hidden; }
+/* place labels */
+.plc { position: absolute; transform: translate(-50%, -100%); font-size: 11.5px; font-weight: 600; white-space: nowrap; padding: 2px 7px 2px 6px; border-radius: 5px; background: var(--panel); border: 1px solid var(--line); color: var(--ink); display: inline-flex; gap: 5px; align-items: center; text-decoration: none; }
+.plc i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex: none; }
+a.plc { pointer-events: auto; cursor: pointer; }
+a.plc:hover { border-color: var(--accent); color: var(--accent); }
+a.plc::after { content: "↗"; font-size: 10px; opacity: .7; }
+.plc.mine { border-width: 2px; }
+.plc.flash { animation: flash 1.2s ease-out 3; }
+@keyframes flash { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 70%, transparent); } 100% { box-shadow: 0 0 0 14px transparent; } }
+/* modal + tutorial */
+.modalbg { position: fixed; inset: 0; z-index: 20; background: rgba(10, 20, 22, 0.42); display: grid; place-items: center; padding: 16px; }
+.modal { width: min(460px, 100%); padding: 22px 22px 18px; display: grid; gap: 14px; }
+.modal h2 { margin: 0; font-size: 21px; letter-spacing: -0.01em; text-wrap: balance; }
+.modal p { margin: 0; line-height: 1.6; color: var(--ink); font-size: 14px; }
+.modal ul { margin: 0; padding-left: 18px; line-height: 1.7; font-size: 13.5px; color: var(--ink); }
+.modal .btns { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+.btn { font: inherit; font-size: 13.5px; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.modal .fine { font-size: 11px; color: var(--muted); }
+.modal label { font-size: 12px; color: var(--muted); display: grid; gap: 5px; }
+.modal input { font: inherit; font-size: 14px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 7px; padding: 8px 10px; }
+.colorrow { display: flex; gap: 8px; align-items: center; }
+.colorrow input { flex: 1; min-width: 0; }
+#mineSwatch { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--line); flex: none; }
+#mineErr { color: var(--danger); font-size: 12px; min-height: 1em; margin: 0; }
+#tutBubble { position: fixed; z-index: 22; width: min(320px, calc(100vw - 32px)); padding: 14px 16px 12px; display: grid; gap: 10px; }
+#tutBubble p { margin: 0; font-size: 13.5px; line-height: 1.55; }
+#tutBubble .step { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+#tutRing { position: fixed; z-index: 21; border: 2px solid var(--accent); border-radius: 10px; box-shadow: 0 0 0 9999px rgba(10, 20, 22, 0.35); pointer-events: none; transition: all .25s; }
+@media (prefers-reduced-motion: reduce) { #tutRing { transition: none; } .plc.flash { animation: none; } }
+
 @media (max-width: 760px) {
   #panels { flex-direction: column; align-items: stretch; gap: 8px; }
   #head, #side { width: 100%; }
@@ -173,7 +218,7 @@ body.night .plbl::before { color: #d9c9a6; }
 <div id="panels">
   <section id="head" class="panel" aria-label="지역">
     <div class="phead">
-      <div class="ttl"><span class="eyebrow">City Plan Model · Draft 4</span><h1 id="title">진주시</h1></div>
+      <div class="ttl"><span class="eyebrow">City Plan Model · Draft 5</span><h1 id="title">진주시</h1></div>
       <button class="fold" id="foldHead" type="button" aria-expanded="true" aria-controls="headBody" aria-label="지역 창 접기"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></button>
     </div>
     <div class="pbody" id="headBody">
@@ -181,10 +226,18 @@ body.night .plbl::before { color: #d9c9a6; }
         <label for="region">지역 (시 · 자치구)</label>
         <select id="region"></select>
       </div>
+      <div class="search" role="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input id="searchBox" type="search" placeholder="장소·산·역·주소 검색 (예: 진주성, 상대동 123)" autocomplete="off" aria-label="장소 검색" aria-controls="results">
+        <div id="results" class="panel" role="listbox" hidden></div>
+      </div>
       <p id="regionNote"></p>
       <div class="row">
         <button class="chipbtn" id="goHall" type="button">시청으로</button>
         <button class="chipbtn" id="nightBtn" type="button" aria-pressed="false">낮</button>
+        <button class="chipbtn" id="mineBtn" type="button">자기만의 건물 짓기</button>
+      </div>
+      <div class="row">
         <button class="chipbtn" id="showBuildable" type="button" aria-pressed="false">설치 가능 구역</button>
         <button class="chipbtn" id="showDongs" type="button" aria-pressed="false">동 경계</button>
       </div>
@@ -226,6 +279,8 @@ body.night .plbl::before { color: #d9c9a6; }
     <button class="fold" id="closeSettings" type="button" aria-label="설정 닫기"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" id="tab-lights" aria-selected="true" aria-controls="pane-lights" type="button">밤 창문 불빛</button>
+    <button class="tab" role="tab" id="tab-terrain" aria-selected="false" aria-controls="pane-terrain" type="button">지형</button>
+    <button class="tab" role="tab" id="tab-rotate" aria-selected="false" aria-controls="pane-rotate" type="button">회전</button>
     <button class="tab" role="tab" id="tab-keys" aria-selected="false" aria-controls="pane-keys" type="button">단축키</button>
   </div>
   <div class="tabpane" id="pane-lights" role="tabpanel">
@@ -233,8 +288,17 @@ body.night .plbl::before { color: #d9c9a6; }
     <p class="note" id="lightNote"></p>
     <div id="customRows" style="display:grid;gap:8px"></div>
   </div>
+  <div class="tabpane" id="pane-terrain" role="tabpanel" hidden>
+    <div class="lrow"><span>지형 높이 과장</span><span class="seg" id="exagSeg"></span></div>
+    <p class="note">산과 골짜기를 실제보다 몇 배 높게 보여 줄지 정해요. 1배가 실제 높이예요. 바꾸면 도로·건물·이름표도 새 높이에 맞춰 다시 놓여요.</p>
+  </div>
+  <div class="tabpane" id="pane-rotate" role="tabpanel" hidden>
+    <div class="lrow"><span>↑ / ↓ 회전 단위</span><span class="seg" id="rotSeg"></span></div>
+    <p class="note">건물을 고른 상태에서 ↑ 키는 시계 방향, ↓ 키는 반시계 방향으로 이만큼 돌아가요. R 키는 이 설정과 관계없이 항상 90°예요.</p>
+  </div>
   <div class="tabpane" id="pane-keys" role="tabpanel" hidden>
     <table class="keys"><tbody id="keyRows"></tbody></table>
+    <button class="btn" id="replayTut" type="button">처음 소개와 사용법 다시 보기</button>
   </div>
 </section>
 
@@ -244,6 +308,37 @@ body.night .plbl::before { color: #d9c9a6; }
   <nav id="dock" class="panel" aria-label="도구"></nav>
 </div>
 <div id="tip" class="panel" hidden></div>
+<div id="mineModal" class="modalbg" hidden>
+  <form class="modal panel" id="mineForm" aria-labelledby="mineTitle">
+    <h2 id="mineTitle">자기만의 건물 짓기</h2>
+    <p>지역마다 하나만 지을 수 있어요. 크기는 이 지역 시청과 같고, 고른 색으로 칠해져요.</p>
+    <label>이름 <input id="mineName" maxlength="20" placeholder="예: 송승주" required></label>
+    <label>색상 (RGB 값, HEX 코드, 영문 색 이름)
+      <span class="colorrow"><input id="mineColor" placeholder="예: #ff7850 · rgb(255,120,80) · coral" required><span id="mineSwatch"></span></span>
+    </label>
+    <p id="mineErr" role="alert"></p>
+    <div class="btns"><button class="btn" type="button" id="mineCancel">취소</button><button class="btn primary" type="submit">위치 고르기</button></div>
+  </form>
+</div>
+<div id="introModal" class="modalbg" hidden>
+  <div class="modal panel" role="dialog" aria-labelledby="introTitle">
+    <h2 id="introTitle">우리 동네를 다시 그려 보세요</h2>
+    <p>실제 지형과 도로 위에 시청, 학교, 역, 문화재 같은 공공시설만 남겨 둔 3D 도시 모형이에요. 빈 땅에 아파트 단지, 상가, 공원, 공장을 직접 지어 보며 내가 생각하는 도시를 만들어 보세요.</p>
+    <ul>
+      <li>전국 시·자치구 중에서 지역을 골라요 (지금은 진주시)</li>
+      <li>건물은 실제 같은 종류 건물들의 평균 크기로 지어져요</li>
+      <li>언제든 실제 도시 모습과 비교해 볼 수 있어요</li>
+    </ul>
+    <div class="btns"><button class="btn" type="button" id="introSkip">바로 시작하기</button><button class="btn primary" type="button" id="introTour">사용법 보기</button></div>
+    <p class="fine">지도 데이터: OpenStreetMap 기여자, 국토교통부 GIS건물통합정보, 행정동 경계(vuski/admdongkor), AWS Terrain Tiles</p>
+  </div>
+</div>
+<div id="tutRing" hidden></div>
+<div id="tutBubble" class="panel" role="dialog" aria-live="polite" hidden>
+  <span class="step" id="tutStep"></span>
+  <p id="tutText"></p>
+  <div class="btns"><button class="btn" type="button" id="tutSkip">건너뛰기</button><button class="btn primary" type="button" id="tutNext">다음</button></div>
+</div>
 <div id="toast" class="panel" hidden></div>
 <div id="loading"><div><div id="loadMsg">지도 데이터를 불러오는 중…</div><div class="bar"><i></i></div></div></div>
 
@@ -261,15 +356,15 @@ let REGIONS = [{"code":"11110","sido":"서울특별시","name":"종로구"},{"co
 let AVAILABLE = new Set(['48170']);
 /* where region data lives: 'flat' = files next to the page, 'dir' = data/<code>/… in the GitHub repository */
 const DATA = {"base": "https://raw.githubusercontent.com/yurmung/korea-city-builder/main/data/", "layout": "dir"};
-const DFILES = { dir: { meta: 'meta.json', class: 'class.png', dist: 'dist.png', roads: 'roads.bin', bldg: 'buildings.bin' },
-                 flat: { meta: '.json', class: '-class.png', dist: '-dist.png', roads: '-roads.b64.txt', bldg: '-bldg.b64.txt' } };
+const DFILES = { dir: { meta: 'meta.json', class: 'class.png', dist: 'dist.png', roads: 'roads.bin', bldg: 'buildings.bin', shade: 'shade.jpg', addr: 'addr.json' },
+                 flat: { meta: '.json', class: '-class.png', dist: '-dist.png', roads: '-roads.b64.txt', bldg: '-bldg.b64.txt', shade: '-shade.jpg', addr: '-addr.json' } };
 const durl = (code, kind) => DATA.layout === 'dir' ? `${DATA.base}${code}/${DFILES.dir[kind]}` : `${DATA.base}${code}${DFILES.flat[kind]}`;
 const DEFAULT_CODE = '48170';
 
 /* ---------- land classes (must match process2.py) ---------- */
-const C = { OUTSIDE: 0, LAND: 1, FARM: 2, FOREST: 3, GRASS: 4, WATER: 5, ROAD: 6, RAIL: 7, GROUNDS: 8, KEPT: 9, STEEP: 10, FAR_LAND: 11, FAR_FARM: 12 };
-const PALETTE = ['#d2cfc7', '#efe9db', '#e4ddb8', '#93b283', '#bdd59f', '#8fb8d6', '#d6cfc1', '#b9b1a4', '#ddd0e6', '#dcd7cb', '#cbbd9f', '#efe9db', '#e4ddb8'];
-const EXAG = 1.6;
+const C = { OUTSIDE: 0, LAND: 1, FARM: 2, FOREST: 3, GRASS: 4, WATER: 5, ROAD: 6, RAIL: 7, GROUNDS: 8, KEPT: 9, STEEP: 10, FAR_LAND: 11, FAR_FARM: 12, AIRPORT: 13, PORT: 14 };
+const PALETTE = ['#d2cfc7', '#efe9db', '#e4ddb8', '#93b283', '#bdd59f', '#8fb8d6', '#d6cfc1', '#b9b1a4', '#ddd0e6', '#dcd7cb', '#c9bb9b', '#efe9db', '#e4ddb8', '#d8dde3', '#cfd8e2'];
+let EXAG = 1.6;
 const OVERLAY_ALPHA = 0.5;
 const NIGHT = { value: 0 };   // shared shader uniform: 0 day, 1 night
 
@@ -284,14 +379,17 @@ const CATS = {
   daily:   { name: '생활시설', color: '#ef8a4a', key: '7', subs: ['dept', 'mart', 'supermarket', 'convenience', 'cafe', 'restaurant', 'fast_food', 'hospital', 'pharmacy', 'bank'] },
   work:    { name: '직장',     color: '#7b8794', key: '8', subs: ['factory', 'office_hi', 'office_lo'] },
   delivery:{ name: '배송',     color: '#d4a017', key: '9', subs: ['post', 'hub'] },
+  farm:    { name: '농업',     color: '#9fb54a', key: '0', subs: ['paddy', 'field'] },
 };
 const ITEM_NAMES = {
   apt: '아파트', house: '주택', shop: '상가', park: '공원', school_e: '초등학교', school_m: '중학교', school_h: '고등학교',
-  factory: '공장', office_hi: '고층 회사', office_lo: '저층 회사', post: '우체국', hub: '배달 허브', aptc: '아파트 단지',
+  factory: '공장', office_hi: '고층 회사', office_lo: '저층 회사', paddy: '논', field: '밭', mine: '자기만의 건물', post: '우체국', hub: '배달 허브', aptc: '아파트 단지',
   cinema: '영화관', pool: '수영장', gym: '실내체육관', stadium: '종합운동장', baseball: '야구장', tennis: '테니스장', theatre: '공연장', museum: '미술관·박물관', library: '도서관', camp: '캠핑장',
   dept: '백화점', mart: '대형마트', supermarket: '슈퍼마켓', convenience: '편의점', cafe: '카페', restaurant: '음식점', fast_food: '패스트푸드점', hospital: '병원', pharmacy: '약국', bank: '은행',
 };
-const KEPT_NAMES = { cityhall: '시청', office: '행정복지센터 · 읍면사무소', university: '대학교', court: '법원', prison: '교정시설', police: '경찰', fire: '소방서', gov: '정부기관' };
+const KEPT_NAMES = { cityhall: '시청', office: '행정복지센터 · 읍면사무소', university: '대학교', court: '법원', prison: '교정시설', police: '경찰', fire: '소방서', gov: '정부기관', heritage: '문화재', museum: '박물관', station: '기차역', subway: '지하철역' };
+const PLACE_KINDS = { heritage: ['문화재', '#b5523b', 14000], museum: ['박물관', '#8a5fb8', 12000], station: ['기차역', '#2f6fb0', 16000], subway: ['지하철역', '#2f6fb0', 8000],
+  airport: ['공항', '#4a6a8a', 60000], port: ['항구', '#3b7f8f', 20000], ic: ['IC·JC', '#3f6b45', 9000], toll: ['요금소', '#6b6b3f', 7000], services: ['휴게소', '#7a6a4a', 7000] };
 let ITEMS = {};   // key -> {name, cat, L, W, H, w, d, n}
 function buildItems(cat, cell) {
   ITEMS = {};
@@ -305,13 +403,16 @@ function buildItems(cat, cell) {
         w: Math.max(1, Math.ceil(L / cell - 0.15)), d: Math.max(1, Math.ceil(W / cell - 0.15)) };
     }
   }
+  const m = cat.mine || { L: 60, W: 40, H: 30, n: 0 };
+  ITEMS.mine = { key: 'mine', name: '자기만의 건물', cat: 'mine', color: '#888', L: m.L, W: m.W, H: m.H, n: 1, hsrc: 'cityhall',
+    w: Math.max(1, Math.ceil(m.L / cell - 0.15)), d: Math.max(1, Math.ceil(m.W / cell - 0.15)) };
 }
-const catOf = (k) => ITEMS[k].cat;
+const catOf = (k) => ITEMS[k].cat === 'mine' ? 'leisure' : ITEMS[k].cat;
 
 /* ---------- state ---------- */
 const S = {
   mode: 'view', cat: 'apt', item: 'apt', lastSub: { school: 'school_e', leisure: 'cinema', daily: 'cafe', work: 'factory', delivery: 'post' }, rot: 0, ang: 0, page: 0, drag: null, night: false,
-  dist: null, lights: null,
+  dist: null, lights: null, rotStep: 10, mineSpec: null, roadsBuf: null,
   region: null, M: null, cls: null, GW: 0, GH: 0, occ: null, heights: null,
   buildings: new Map(), nextId: 1, history: [], ghost: null, ghostKey: '',
   showBuildable: false, showDongs: false, real: false,
@@ -442,6 +543,7 @@ function paintBase() {
   // soften pixel stair-steps, then draw the crisp region edge
   const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
   const ctx = cv.getContext('2d'); ctx.filter = 'blur(0.8px)'; ctx.drawImage(raw, 0, 0); ctx.filter = 'none';
+  if (S.shadeImg) { ctx.globalCompositeOperation = 'soft-light'; ctx.drawImage(S.shadeImg, 0, 0, W, H); ctx.drawImage(S.shadeImg, 0, 0, W, H); ctx.globalCompositeOperation = 'source-over'; }
   const edge = hex2abgr('#2a4f3c');
   const id2 = ctx.getImageData(0, 0, W, H); const e32 = new Uint32Array(id2.data.buffer);
   for (let y = 2; y < H - 2; y++) for (let x = 2; x < W - 2; x++) {
@@ -470,7 +572,7 @@ function paintBuildOverlay(x0 = 0, y0 = 0, x1 = null, y1 = null) {
   const BLOCK = 0xff0000ff >>> 0, FREE = 0xff000000 >>> 0;
   for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
     const i = y * W + x, c = cls[i];
-    u32[i] = c === 0 ? 0 : ((isLand(c) || c === C.ROAD) && !occ[i] ? FREE : BLOCK);
+    u32[i] = c === 0 ? 0 : ((S.ovFarm ? !FARM_BLOCK.has(c) : isLand(c)) || c === C.ROAD) && !occ[i] ? FREE : BLOCK;
   }
   buildCtx.putImageData(buildImg, 0, 0, x0, y0, x1 - x0, y1 - y0);
   buildOv.material.map.needsUpdate = true;
@@ -490,8 +592,11 @@ function overlayMaterial() {
 }
 function updateOverlayVisibility() {
   const want = !S.real && (S.mode === 'build' || S.showBuildable);
+  const farmMode = S.mode === 'build' && isFarmItem(S.item);
+  if (want && buildCanvas && !!S.ovFarm !== farmMode) { S.ovFarm = farmMode; paintBuildOverlay(0, 0, S.M.W, S.M.H); }
+  S.ovFarm = farmMode;
   if (want && !buildCanvas) paintBuildOverlay();
-  if (buildOv) buildOv.material.userData.u.uLimit.value = S.mode === 'build' && S.item === 'camp' ? S.M.accessCamp : S.M.access;
+  if (buildOv) buildOv.material.userData.u.uLimit.value = S.mode === 'build' ? limitFor(S.item) : S.M.access;
   if (buildOv) buildOv.visible = want;
   if (dongOv) dongOv.visible = S.showDongs;
   for (const d of dongLabelEls) d.el.hidden = !S.showDongs;
@@ -500,7 +605,7 @@ function updateOverlayVisibility() {
     hint.innerHTML = '';
     const a = document.createElement('span'); a.innerHTML = '<i style="background:#2f6fe0"></i>설치 가능';
     const b = document.createElement('span'); b.innerHTML = '<i style="background:#d8392b"></i>설치 불가';
-    const c = document.createElement('span'); c.style.color = 'var(--muted)'; c.textContent = `도로에서 ${S.mode === 'build' && S.item === 'camp' ? S.M.accessCamp + 'm(캠핑장 예외)' : S.M.access + 'm'} 이내 빈 땅·농지만 가능`;
+    const c = document.createElement('span'); c.style.color = 'var(--muted)'; c.textContent = S.mode === 'build' && isFarmItem(S.item) ? '산·숲·물·목초지가 아니면 어디든 가능 (도로 거리 제한 없음)' : `도로에서 ${S.mode === 'build' && S.item === 'camp' ? S.M.accessCamp + 'm(캠핑장 예외)' : S.M.access + 'm'} 이내 빈 땅·농지만 가능 · 도로로 둘러싸인 블록 안은 거리 제한 없음`;
     hint.append(a, b, c);
     if (S.mode === 'build' && S.item === 'apt') { const q = document.createElement('span'); q.style.fontWeight = '600'; q.textContent = '드래그해서 단지 구역을 그리면 동이 자동 배치돼요 (지도 이동은 Esc)'; hint.append(q); }
   }
@@ -535,46 +640,96 @@ const ROAD_STYLE = [
   { w: 22, c: '#57534f', lift: 1.6 }, { w: 18, c: '#5b5753', lift: 1.5 }, { w: 15, c: '#625e59', lift: 1.4 },
   { w: 12, c: '#6e6a64', lift: 1.3 }, { w: 9, c: '#7a756f', lift: 1.2 }, { w: 6, c: '#857f78', lift: 1.1 },
   { w: 5.5, c: '#8a847c', lift: 1.0 }, { w: 4.5, c: '#8f8981', lift: 1.0 }, { w: 3.5, c: '#3f3a36', lift: 1.0 },
+  { w: 45, c: '#4b4f55', lift: 0.8 }, { w: 22, c: '#6b7078', lift: 0.7 }, { w: 9, c: '#9a948a', lift: 0.6 },
 ];
-function buildRoads(buf) {
-  while (roadGroup.children.length) { const m = roadGroup.children.pop(); m.geometry.dispose(); }
-  const dv = new DataView(buf); let o = 0; const n = dv.getUint32(o, true); o += 4;
-  const groups = ROAD_STYLE.map(() => ({ pos: [], idx: [] }));
+function parseRoads(buf) {
+  const dv = new DataView(buf); let o = 0; const n = dv.getUint32(o, true); o += 4; const out = [];
   for (let r = 0; r < n; r++) {
     const cl = dv.getUint8(o), fl = dv.getUint8(o + 1), np = dv.getUint16(o + 2, true); o += 4;
     const pts = []; for (let k = 0; k < np; k++) { pts.push([dv.getInt16(o, true), dv.getInt16(o + 2, true)]); o += 4; }
-    const st = ROAD_STYLE[cl]; const half = st.w * ((fl & 2) ? 0.6 : 1) / 2;
-    // resample every 10 m
-    const rs = [pts[0]];
-    for (let k = 1; k < pts.length; k++) {
-      const [ax, ay] = pts[k - 1], [bx, by] = pts[k]; const L = Math.hypot(bx - ax, by - ay); const steps = Math.max(1, Math.ceil(L / 10));
-      for (let s = 1; s <= steps; s++) rs.push([ax + (bx - ax) * s / steps, ay + (by - ay) * s / steps]);
+    out.push({ cl, bridge: fl & 1, link: fl & 2, tunnel: fl & 4, layer: ((fl >> 4) & 15) - 8, pts });
+  }
+  return out;
+}
+function buildRoads(list) {
+  while (roadGroup.children.length) { const m = roadGroup.children.pop(); m.traverse(o => o.geometry && o.geometry.dispose()); }
+  const groups = ROAD_STYLE.map(() => ({ pos: [], idx: [] }));
+  const tun = { pos: [], idx: [] }, side = { pos: [], idx: [] }, piers = [], portals = [];
+  // endpoints shared by other raised ways keep their height; free ends ramp down to the ground
+  const raisedEnds = new Map(); const key = (p) => p[0] + ',' + p[1];
+  for (const r of list) if ((r.bridge || r.layer > 0) && !r.tunnel) for (const p of [r.pts[0], r.pts[r.pts.length - 1]]) raisedEnds.set(key(p), (raisedEnds.get(key(p)) || 0) + 1);
+  for (const r of list) {
+    const st = ROAD_STYLE[r.cl]; const half = st.w * (r.link ? 0.6 : 1) / 2;
+    const rs = [r.pts[0]];
+    for (let k = 1; k < r.pts.length; k++) {
+      const [ax, ay] = r.pts[k - 1], [bx, by] = r.pts[k]; const L = Math.hypot(bx - ax, by - ay); const steps = Math.max(1, Math.ceil(L / 10));
+      for (let s2 = 1; s2 <= steps; s2++) rs.push([ax + (bx - ax) * s2 / steps, ay + (by - ay) * s2 / steps]);
     }
     if (rs.length < 2) continue;
-    const bridge = fl & 1; const h0 = heightAt(...rs[0]), h1 = heightAt(...rs[rs.length - 1]);
     let total = 0; const acc = [0]; for (let k = 1; k < rs.length; k++) { total += Math.hypot(rs[k][0] - rs[k - 1][0], rs[k][1] - rs[k - 1][1]); acc.push(total); }
-    const g = groups[cl]; const base = g.pos.length / 3;
+    const raised = (r.bridge || r.layer > 0) && !r.tunnel; const under = r.tunnel || r.layer < 0;
+    const h0 = heightAt(...rs[0]), h1 = heightAt(...rs[rs.length - 1]);
+    const lift = r.layer > 0 ? r.layer * 6 * EXAG / 1.6 : 0;
+    const freeA = raised && (raisedEnds.get(key(r.pts[0])) || 0) < 2, freeB = raised && (raisedEnds.get(key(r.pts[r.pts.length - 1])) || 0) < 2;
+    const ramp = Math.min(80, total / 2);
+    const hs = rs.map(([x, y], k) => {
+      const gnd = heightAt(x, y);
+      if (!raised) return gnd;
+      let f = 1; if (freeA && acc[k] < ramp) f = Math.min(f, acc[k] / ramp); if (freeB && total - acc[k] < ramp) f = Math.min(f, (total - acc[k]) / ramp);
+      const deck = r.bridge ? h0 + (h1 - h0) * acc[k] / (total || 1) : gnd;
+      return Math.max(gnd, deck + lift * f);
+    });
+    const tgt = under ? tun : groups[r.cl]; const base = tgt.pos.length / 3;
+    let lastPier = -999;
     for (let k = 0; k < rs.length; k++) {
       const p0 = rs[Math.max(0, k - 1)], p1 = rs[Math.min(rs.length - 1, k + 1)];
       let tx = p1[0] - p0[0], ty = p1[1] - p0[1]; const tl = Math.hypot(tx, ty) || 1; tx /= tl; ty /= tl;
-      const nx = -ty * half, ny = tx * half;
-      const [x, y] = rs[k];
-      let h = Math.max(heightAt(x + nx, y + ny), heightAt(x - nx, y - ny), heightAt(x, y));
-      if (bridge && total > 0) h = Math.max(h0 + (h1 - h0) * acc[k] / total, h);
-      h += st.lift;
-      g.pos.push(x + nx, h, -(y + ny), x - nx, h, -(y - ny));
-      if (k > 0) { const a = base + (k - 1) * 2; g.idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
+      const nx = -ty * half, ny = tx * half; const [x, y] = rs[k];
+      let h = raised ? hs[k] : Math.max(heightAt(x + nx, y + ny), heightAt(x - nx, y - ny), heightAt(x, y));
+      h += under ? 0.4 : st.lift;
+      tgt.pos.push(x + nx, h, -(y + ny), x - nx, h, -(y - ny));
+      if (k > 0 && !(under && Math.floor(acc[k] / 12) % 2)) { const a = base + (k - 1) * 2; tgt.idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
+      if (raised) {   // deck edge skirt + parapets
+        const sb = side.pos.length / 3;
+        side.pos.push(x + nx, h, -(y + ny), x + nx, h - 1.6, -(y + ny), x - nx, h, -(y - ny), x - nx, h - 1.6, -(y - ny),
+                      x + nx * 1.02, h + 0.9, -(y + ny * 1.02), x - nx * 1.02, h + 0.9, -(y - ny * 1.02));
+        if (k > 0) { const a = sb - 6; for (const [p, q] of [[0, 1], [2, 3], [0, 4], [2, 5]]) side.idx.push(a + p, sb + p, a + q, sb + p, sb + q, a + q); }
+        const gnd = heightAt(x, y);
+        if (h - gnd > 4 && acc[k] - lastPier >= 32) { piers.push([x, y, gnd, h - 1.6, half]); lastPier = acc[k]; }
+      }
+    }
+    if (r.tunnel && r.cl < 8) for (const k of [0, rs.length - 1]) {   // tunnel portals where the road dives under ground
+      const j = k ? k - 1 : 1; const ang = Math.atan2(rs[k][1] - rs[j][1], rs[k][0] - rs[j][0]);
+      portals.push([rs[k][0], rs[k][1], ang, half]);
     }
   }
-  groups.forEach((g, k) => {
-    if (!g.pos.length) return;
+  const mk = (g, color, opts = {}) => {
+    if (!g.pos.length) return null;
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.Float32BufferAttribute(g.pos, 3));
-    geo.setIndex(g.idx.length > 65535 ? new THREE.Uint32BufferAttribute(g.idx, 1) : new THREE.Uint16BufferAttribute(g.idx, 1));
+    geo.setIndex(g.pos.length / 3 > 65535 ? new THREE.Uint32BufferAttribute(g.idx, 1) : new THREE.Uint16BufferAttribute(g.idx, 1));
     geo.computeVertexNormals();
-    const m = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ color: ROAD_STYLE[k].c, side: THREE.DoubleSide }));
-    m.receiveShadow = true; m.renderOrder = 1; roadGroup.add(m);
-  });
+    const m = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ color, side: THREE.DoubleSide, ...opts }));
+    m.receiveShadow = true; m.renderOrder = 1; roadGroup.add(m); return m;
+  };
+  groups.forEach((g, k) => mk(g, ROAD_STYLE[k].c));
+  const tm = mk(tun, '#5a5650', { transparent: true, opacity: 0.38, depthWrite: false }); if (tm) tm.renderOrder = 4;
+  const sm = mk(side, '#a39d93'); if (sm) sm.castShadow = true;
+  if (piers.length) {
+    const im = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshLambertMaterial({ color: '#aaa49a' }), piers.length);
+    const M4 = new THREE.Matrix4(); piers.forEach(([x, y, g0, top, hw], i) => { const hgt = Math.max(1, top - g0 + 1); M4.compose(new THREE.Vector3(x, g0 - 1 + hgt / 2, -y), new THREE.Quaternion(), new THREE.Vector3(Math.min(2.2, hw), hgt, 1.8)); im.setMatrixAt(i, M4); });
+    im.castShadow = true; roadGroup.add(im);
+  }
+  for (const [x, y, ang, hw] of portals) {
+    const p = new THREE.Mesh(new THREE.BoxGeometry(3, 7, hw * 2 + 5), mat('#8d877d')); p.userData.noLit = true;
+    p.position.set(x, heightAt(x, y) + 3.5, -y); p.rotation.y = ang; p.castShadow = true; roadGroup.add(p);
+  }
+  // toll plazas
+  for (const q of (S.M.places || []).filter(q => q.k === 'toll')) {
+    const g = new THREE.Group(); const hgt = heightAt(q.x, q.y);
+    g.add(box(9, 1.2, 40, '#e8e3d6', 0, 6.2, 0)); for (let i = -2; i <= 2; i++) g.add(box(2.4, 3, 1.6, '#d4a017', 0, 0, i * 7.5));
+    g.position.set(q.x, hgt + 0.8, -q.y); g.rotation.y = (q.a || 0) * Math.PI / 180; g.traverse(o => o.userData.noLit = true); roadGroup.add(g);
+  }
 }
 
 /* ---------- materials ---------- */
@@ -622,7 +777,7 @@ function stripeTexture() {
 const stripeTex = stripeTexture();
 
 /* ---------- existing public buildings ---------- */
-const KEPT_COLOR = { cityhall: '#e9dfc4', court: '#e3ddd2', prison: '#d5d1c8', university: '#e6e2d8', office: '#e5e0d4', police: '#dfdcd4', fire: '#e6d8d2', gov: '#e1ddd3' };
+const KEPT_COLOR = { heritage: '#c8a07a', museum: '#dcd2e6', station: '#d0dbe8', subway: '#d0dbe8', cityhall: '#e9dfc4', court: '#e3ddd2', prison: '#d5d1c8', university: '#e6e2d8', office: '#e5e0d4', police: '#dfdcd4', fire: '#e6d8d2', gov: '#e1ddd3' };
 function buildKept() {
   for (const b of S.M.kept) {
     const shape = new THREE.Shape(b.p.map(([x, y]) => new THREE.Vector2(x, y)));
@@ -686,7 +841,7 @@ function tree(x, z, s = 1) {
 function cylinder(r, h, color, x = 0, y = 0, z = 0, seg = 24) {
   const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h, seg), mat(color)); m.position.set(x, y + h / 2, z); m.castShadow = m.receiveShadow = true; return m;
 }
-function makeModel(k) {
+function makeModel(k, b) {
   const it = ITEMS[k]; const L = it.L, W = it.W, H = Math.max(it.H, 3); const g = new THREE.Group(); const col = it.color;
   switch (k) {
     case 'apt': {
@@ -821,13 +976,32 @@ function makeModel(k) {
       for (let i = 0; i < Math.min(6, nd); i += 2) { g.add(box(2.4, 3.6, 9, '#f2f2f2', -L / 2 + (i + 0.5) * L / nd, 0, W * 0.31)); g.add(box(2.4, 2.6, 2, '#d4a017', -L / 2 + (i + 0.5) * L / nd, 0, W * 0.31 + 5.5)); }
       g.add(box(L + 0.4, 1.2, W * 0.62 + 0.4, '#d4a017', 0, H - 1.2, -W * 0.19)); break;
     }
+    case 'paddy': {
+      g.add(slab(L, 0.5, W, '#7d9a4a')); g.add(slab(L - 2, 0.62, W - 2, '#9fc35a'));
+      const nr = Math.max(4, Math.round(W / 1.6)); for (let i = 0; i < nr; i += 2) g.add(slab(L - 3, 0.66, 0.35, '#8fb64c', 0, 0, -W / 2 + 1.5 + i * (W - 3) / nr));
+      g.add(slab(L, 0.9, 0.8, '#b8a578', 0, 0, -W / 2)); g.add(slab(L, 0.9, 0.8, '#b8a578', 0, 0, W / 2)); g.add(slab(0.8, 0.9, W, '#b8a578', -L / 2, 0, 0)); g.add(slab(0.8, 0.9, W, '#b8a578', L / 2, 0, 0));
+      break;
+    }
+    case 'field': {
+      g.add(slab(L, 0.5, W, '#a8865c'));
+      const nr = Math.max(6, Math.round(W / 1.2)); for (let i = 0; i < nr; i++) g.add(slab(L - 2, 0.75, 0.45, i % 2 ? '#7aa04a' : '#8c6b45', 0, 0, -W / 2 + 1 + i * (W - 2) / nr));
+      break;
+    }
+    case 'mine': {
+      const c = new THREE.Color(b?.col || '#888888'); const light = c.clone().lerp(new THREE.Color('#ffffff'), 0.55); const dark = c.clone().lerp(new THREE.Color('#000000'), 0.25);
+      g.add(box(L, H, W, '#' + c.getHexString())); g.add(box(L + 0.6, Math.max(2, H * 0.08), W + 0.6, '#' + light.getHexString(), 0, H * 0.72, 0)); g.add(box(L * 0.3, Math.max(3, H * 0.1), 1.5, '#' + dark.getHexString(), 0, H, W / 2 - 1));
+      break;
+    }
     default: g.add(box(L, H, W, col));
   }
   return g;
 }
 
 /* ---------- placement grid (1 cell = 1 class pixel) ---------- */
-const limitFor = (k) => k === 'camp' ? S.M.accessCamp : S.M.access;
+const isFarmItem = (k) => k === 'paddy' || k === 'field';
+const limitFor = (k) => isFarmItem(k) ? 255 : k === 'camp' ? S.M.accessCamp : S.M.access;
+const FARM_BLOCK = new Set([C.OUTSIDE, C.FOREST, C.STEEP, C.GRASS, C.WATER, C.ROAD, C.RAIL, C.GROUNDS, C.KEPT, C.AIRPORT, C.PORT]);
+const landOkFor = (k, c) => isFarmItem(k) ? !FARM_BLOCK.has(c) : isLand(c);
 const cellOk = (k, lim) => isLand(S.cls[k]) && S.dist[k] <= lim;
 /* a single building: centre (cx, cy) in cell units, angle a in degrees clockwise; covers cells whose centre lies inside the rotated lot */
 function lotDims(k) { const it = ITEMS[k]; return [it.w * S.M.cell, it.d * S.M.cell]; }
@@ -848,7 +1022,7 @@ function canPlaceB(k, cx, cy, a) {
     if (i < 0 || j < 0 || i >= S.GW || j >= S.GH) return 'out';
     const q = j * S.GW + i;
     if (S.occ[q]) return 'occupied';
-    if (!isLand(S.cls[q])) return 'blocked';
+    if (!landOkFor(k, S.cls[q])) return 'blocked';
     if (S.dist[q] > lim) far = true;
   }
   return far ? 'far' : 'ok';
@@ -865,7 +1039,7 @@ function makeLot(b) {
   const plinthH = hi - lo + 1.2;
   const plinth = new THREE.Mesh(new THREE.BoxGeometry(Lm - 0.8, plinthH, Wm - 0.8), mat('#e4dccb'));
   plinth.position.y = -plinthH / 2 + 0.2; plinth.rotation.y = rot; plinth.receiveShadow = true; plinth.userData.noLit = true; g.add(plinth);
-  const model = makeModel(k);
+  const model = makeModel(k, b);
   const f = Math.min(1, (Lm - 1) / it.L, (Wm - 1) / it.W); model.scale.set(f, 1, f);
   model.rotation.y = rot; model.position.y = 0.2; g.add(model);
   if (k === 'factory' && b.id > 0 && model.userData.chimney) addSmoke(model, model.userData.chimney, b.fx || 'steam');
@@ -945,13 +1119,14 @@ function makeComplex(b, ghostMat) {
 }
 function addBuilding(b) {
   const g = isComplex(b) ? makeComplex(b) : makeLot(b); userGroup.add(g); S.buildings.set(b.id, { b, g }); setOcc(b, b.id);
+  if (b.k === 'mine') addMineLabel(b);
   if (S.night) setLit(g, litValueFor(b));
 }
 function removeBuilding(id) {
   const e = S.buildings.get(id); if (!e) return null;
   userGroup.remove(e.g); e.g.traverse(o => o.geometry && o.geometry.dispose());
   smoke = smoke.filter(s => s.root !== e.g && !isDescendant(s.group, e.g));
-  S.buildings.delete(id); setOcc(e.b, 0); return e.b;
+  S.buildings.delete(id); setOcc(e.b, 0); if (e.b.k === 'mine') removeMineLabel(); return e.b;
 }
 function isDescendant(o, root) { for (let p = o; p; p = p.parent) if (p === root) return true; return false; }
 
@@ -988,7 +1163,7 @@ function prefGet(k, d) { try { const v = localStorage.getItem('cityplan:ui:' + k
 function prefSet(k, v) { try { localStorage.setItem('cityplan:ui:' + k, v ? '1' : '0'); } catch (e) {} }
 
 /* ---------- actions + history ---------- */
-const nameOf = (b) => isComplex(b) ? `아파트 단지(${b.t.length}개 동)` : ITEMS[b.k].name;
+const nameOf = (b) => isComplex(b) ? `아파트 단지(${b.t.length}개 동)` : b.k === 'mine' ? `${b.nm}의 건물` : ITEMS[b.k].name;
 function rectOf(c0, c1) { return [Math.min(c0[0], c1[0]), Math.min(c0[1], c1[1]), Math.abs(c0[0] - c1[0]) + 1, Math.abs(c0[1] - c1[1]) + 1]; }
 function placeComplex(c0, c1) {
   const [ci, cj, w, d] = rectOf(c0, c1);
@@ -998,7 +1173,9 @@ function placeComplex(c0, c1) {
   const b = { id: S.nextId++, k: 'aptc', ci, cj, w, d, rot: S.rot, s: c0, t };
   addBuilding(b); S.history.push({ op: 'place', b }); toast(`아파트 단지에 ${t.length}개 동을 배치했어요.`); after();
 }
+function hasMine() { for (const { b } of S.buildings.values()) if (b.k === 'mine') return true; return false; }
 function place(cx, cy) {
+  if (S.item === 'mine' && hasMine()) { toast('자기만의 건물은 지역마다 하나만 지을 수 있어요.', true); setMode('view'); return; }
   const why = canPlaceB(S.item, cx, cy, S.ang);
   if (why !== 'ok') {
     toast({ occupied: '이미 건물이 있는 자리예요.', far: `도로에서 ${limitFor(S.item)}m보다 먼 땅이라 지을 수 없어요.`, out: '지역 밖이라 지을 수 없어요.' }[why] || '빨간색 땅에는 지을 수 없어요. 산, 숲, 물, 도로, 기관 부지는 제외돼요.', true);
@@ -1006,7 +1183,10 @@ function place(cx, cy) {
   }
   const b = { id: S.nextId++, k: S.item, cx, cy, a: S.ang };
   if (S.item === 'factory') b.fx = Math.random() < 0.5 ? 'steam' : 'smoke';
-  addBuilding(b); S.history.push({ op: 'place', b }); after();
+  if (S.item === 'mine') { b.nm = S.mineSpec.name; b.col = S.mineSpec.color; }
+  addBuilding(b); S.history.push({ op: 'place', b });
+  if (S.item === 'mine') { toast(`${b.nm}의 건물을 지었어요.`); setMode('view'); }
+  after();
 }
 function demolish(id) { const b = removeBuilding(id); if (!b) return; S.history.push({ op: 'demolish', b }); toast(`${nameOf(b)} 철거했어요.`); after(); }
 function undo() {
@@ -1017,7 +1197,8 @@ function undo() {
   else { addBuilding(h.b); toast(`${nameOf(h.b)} 철거를 취소했어요.`); }
   after();
 }
-function after() { save(); renderTally(); updateDock(); S.ghostKey = ''; updateGhost(); }
+function after() { save(); renderTally(); updateDock(); updateMineBtn(); S.ghostKey = ''; updateGhost(); }
+function updateMineBtn() { if (hasMine()) $('mineBtn').dataset.hidden = ''; else delete $('mineBtn').dataset.hidden; $('mineBtn').setAttribute('aria-hidden', hasMine()); $('mineBtn').tabIndex = hasMine() ? -1 : 0; }
 
 /* ---------- ghost preview ---------- */
 const ghostOK = new THREE.MeshBasicMaterial({ color: 0x2f6fe0, transparent: true, opacity: 0.55, depthWrite: false });
@@ -1147,6 +1328,7 @@ function processMove() {
   const uh = objectHit(ndc, userGroup);
   if (uh) { const b = S.buildings.get(uh.object.userData.bid)?.b; if (b) {
     if (isComplex(b)) info = { t: nameOf(b), s: `구역 ${Math.round(b.w * S.M.cell)}×${Math.round(b.d * S.M.cell)}m · 동당 ${fmtM(ITEMS.apt)}` + (S.mode === 'demolish' ? ' · 클릭하면 단지 전체 철거' : '') };
+    else if (b.k === 'mine') info = { t: nameOf(b), s: `${fmtM(ITEMS.mine)} · 높이 ${ITEMS.mine.H}m · ${b.col}` + (S.mode === 'demolish' ? ' · 클릭하면 철거' : '') };
     else { const it = ITEMS[b.k]; info = { t: it.name + (b.k === 'factory' ? (b.fx === 'smoke' ? ' · 연기' : ' · 수증기') : ''), s: `${fmtM(it)} · 높이 ${it.H}m · ${((b.a % 360) + 360) % 360}°` + (S.mode === 'demolish' ? ' · 클릭하면 철거' : '') }; } } }
   else { const kh = objectHit(ndc, keptGroup); if (kh) { const k = kh.object.userData.kept; info = { t: k.n || KEPT_NAMES[k.k], s: '기존 건물 · ' + KEPT_NAMES[k.k] }; } }
   const tip = $('tip');
@@ -1163,6 +1345,27 @@ function buildLabels() {
     labelEls.push({ el, p: toWorld(l.x, l.y, heightAt(l.x, l.y) + 45) });
   }
 }
+let placeEls = [], mineEl = null;
+function buildPlaces() {
+  placeEls.forEach(p => p.el.remove()); placeEls = [];
+  for (const q of S.M.places || []) {
+    const kind = PLACE_KINDS[q.k]; if (!kind) continue;
+    const el = document.createElement(q.u ? 'a' : 'div'); el.className = 'plc';
+    if (q.u) { el.href = q.u; el.target = '_blank'; el.rel = 'noopener'; el.title = `${q.n} 관련 사이트 열기`; }
+    const dot = document.createElement('i'); dot.style.background = kind[1]; el.append(dot, document.createTextNode(q.n));
+    $('labels').appendChild(el);
+    placeEls.push({ el, p: toWorld(q.x, q.y, heightAt(q.x, q.y) + 30), far: kind[2], q });
+  }
+}
+function addMineLabel(b) {
+  removeMineLabel();
+  const el = document.createElement('div'); el.className = 'plc mine'; el.style.borderColor = b.col;
+  const dot = document.createElement('i'); dot.style.background = b.col; el.append(dot, document.createTextNode(`${b.nm}의 건물`));
+  $('labels').appendChild(el);
+  const M = S.M; const x = M.xmin + b.cx * M.cell, y = M.ymax - b.cy * M.cell;
+  mineEl = { el, p: toWorld(x, y, heightAt(x, y) + ITEMS.mine.H + 14) };
+}
+function removeMineLabel() { if (mineEl) { mineEl.el.remove(); mineEl = null; } }
 let peakEls = [];
 function buildPeaks() {
   peakEls.forEach(p => p.el.remove()); peakEls = [];
@@ -1185,6 +1388,9 @@ function updateLabels() {
   for (const { el, p } of labelEls) placeLabel(el, p, Math.max(9000, dist * 1.6));
   if (S.showDongs) for (const { el, p } of dongLabelEls) placeLabel(el, p, Math.max(30000, dist * 3));
   for (const { el, p, e } of peakEls) placeLabel(el, p, 2500 + e * 22 + dist * 0.6);
+  for (const { el, p, far } of placeEls) placeLabel(el, p, Math.max(far, dist * 1.4));
+  if (mineEl) placeLabel(mineEl.el, mineEl.p, Math.max(20000, dist * 2));
+  if (flashEl) placeLabel(flashEl.el, flashEl.p, 1e9);
   $('compassNeedle').setAttribute('transform', `rotate(${(Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z) * 180 / Math.PI).toFixed(1)} 12 12)`);
 }
 
@@ -1279,7 +1485,7 @@ function buildDock() {
 function buildSub() {
   const sub = $('sub'); sub.innerHTML = '';
   const c = CATS[S.cat];
-  if (!c.subs || S.mode !== 'build') { sub.hidden = true; return; }
+  if (!c || !c.subs || S.mode !== 'build') { sub.hidden = true; updateOverlayVisibility(); return; }
   for (const k of c.subs) {
     const it = ITEMS[k];
     const b = document.createElement('button'); b.type = 'button'; b.className = 'chipbtn'; b.setAttribute('aria-pressed', S.item === k);
@@ -1331,9 +1537,10 @@ function renderTally() {
     if (ck === 'apt' && complexes) row(null, '└ 단지', complexes, true);
     if (c.subs) for (const k of keys) if (counts[k]) row(null, '└ ' + ITEMS[k].name, counts[k], true);
   }
+  if (counts.mine) { let col = '#000'; for (const { b } of S.buildings.values()) if (b.k === 'mine') col = b.col || col; row(col, '자기만의 건물', counts.mine); }
 }
 function buildLegend() {
-  const items = [['#2f6fe0', '설치 가능 (건설 중 표시)'], ['#d8392b', '설치 불가 (건설 중 표시)'], [PALETTE[1], '빈 땅'], [PALETTE[2], '농지'], [PALETTE[10], '산 · 급경사지'], [PALETTE[3], '숲'], [PALETTE[4], '초지 · 공원 · 묘지'], [PALETTE[5], '하천 · 저수지'], ['#6e6a64', '도로'], [PALETTE[8], '기관 · 군 부지'], [PALETTE[9], '기존 공공 건물']];
+  const items = [['#2f6fe0', '설치 가능 (건설 중 표시)'], ['#d8392b', '설치 불가 (건설 중 표시)'], [PALETTE[1], '빈 땅'], [PALETTE[2], '농지'], [PALETTE[10], '산 · 급경사지'], [PALETTE[3], '숲'], [PALETTE[4], '초지 · 공원 · 묘지'], [PALETTE[5], '하천 · 저수지'], ['#6e6a64', '도로'], [PALETTE[8], '기관 · 군 · 문화재 부지'], [PALETTE[13], '공항'], [PALETTE[14], '항만'], [PALETTE[9], '기존 공공 건물']];
   const el = $('legend'); el.innerHTML = '';
   for (const [c, t] of items) { const s = document.createElement('span'); s.className = 'sw'; s.style.background = c; const n = document.createElement('span'); n.textContent = t; el.append(s, n); }
 }
@@ -1345,20 +1552,20 @@ function toast(msg, warn) {
 }
 
 addEventListener('keydown', (e) => {
-  if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+  if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT' || !$('introModal').hidden || !$('mineModal').hidden) return;
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); undo(); return; }
   if (e.ctrlKey || e.metaKey || e.altKey) return;
   if (e.key === 'Escape') { if (!$('settings').hidden) { openSettings(false); return; } if (S.drag) { S.drag = null; controls.enabled = true; $('tip').hidden = true; } setMode('view'); return; }
   if (S.real) return;
   const dm = /^Digit([0-9])$/.exec(e.code);
   if (dm && e.shiftKey) {
-    const c = CATS[S.cat]; const n = +dm[1]; const idx = n === 0 ? 9 : n - 1;
+    const c = CATS[S.cat] || {}; const n = +dm[1]; const idx = n === 0 ? 9 : n - 1;
     if (S.mode === 'build' && c.subs && c.subs[idx]) { e.preventDefault(); S.item = c.subs[idx]; S.lastSub[S.cat] = S.item; S.ghostKey = ''; buildSub(); updateGhost(); }
     return;
   }
   if (e.key === 'r' || e.key === 'R') rotate(90);
-  else if (e.key === 'ArrowUp' && S.mode === 'build') { e.preventDefault(); rotate(10); }
-  else if (e.key === 'ArrowDown' && S.mode === 'build') { e.preventDefault(); rotate(-10); }
+  else if (e.key === 'ArrowUp' && S.mode === 'build') { e.preventDefault(); rotate(S.rotStep); }
+  else if (e.key === 'ArrowDown' && S.mode === 'build') { e.preventDefault(); rotate(-S.rotStep); }
   else if (e.key === 'd' || e.key === 'D') setMode(S.mode === 'demolish' ? 'view' : 'demolish');
   else if (e.key === 'ArrowLeft') { e.preventDefault(); turnPage(-1); }
   else if (e.key === 'ArrowRight') { e.preventDefault(); turnPage(1); }
@@ -1374,6 +1581,13 @@ function fold(btnId, bodyId, pref, defOpen) {
   btn.onclick = () => set(btn.getAttribute('aria-expanded') !== 'true');
 }
 const narrow = matchMedia('(max-width: 760px)').matches;
+/* keep the left rail clear of the region panel */
+function placeRail() {
+  const rail = $('rail'); if (matchMedia('(max-width: 760px)').matches) { rail.style.top = ''; rail.style.transform = ''; return; }
+  const hb = $('head').getBoundingClientRect().bottom, rh = rail.offsetHeight;
+  const top = Math.max(hb + 12, (innerHeight - rh) / 2); rail.style.top = top + 'px'; rail.style.transform = 'none';
+}
+addEventListener('resize', placeRail); new ResizeObserver(placeRail).observe(document.getElementById('head'));
 fold('foldHead', 'headBody', 'head', !narrow);
 fold('foldSide', 'sideBody', 'side', !narrow);
 
@@ -1385,7 +1599,8 @@ $('compass').onclick = northUp;
 $('nightBtn').onclick = () => setNight(!S.night);
 $('settingsBtn').onclick = () => openSettings($('settings').hidden);
 $('closeSettings').onclick = () => openSettings(false);
-for (const t of ['lights', 'keys']) $('tab-' + t).onclick = () => { for (const u of ['lights', 'keys']) { $('tab-' + u).setAttribute('aria-selected', u === t); $('pane-' + u).hidden = u !== t; } };
+const TABS = ['lights', 'terrain', 'rotate', 'keys'];
+for (const t of TABS) $('tab-' + t).onclick = () => { for (const u of TABS) { $('tab-' + u).setAttribute('aria-selected', u === t); $('pane-' + u).hidden = u !== t; } };
 function openSettings(open) { $('settings').hidden = !open; $('settingsBtn').setAttribute('aria-pressed', open); if (open) renderSettings(); }
 function renderSettings() {
   const L = S.lights;
@@ -1403,11 +1618,14 @@ function renderSettings() {
     r.append(lab, seg); rows.append(r);
   }
   const keys = [
-    ['1 ~ 9', '건물 카테고리 선택'], ['Shift + 1 ~ 0', '카테고리 안 세부 건물 선택 (칩 번호 순서)'], ['← / →', '카테고리 묶음 넘기기'],
-    ['↑ / ↓', '건물 방향 10° 회전 (↑ 시계, ↓ 반시계)'], ['R', '건물 방향 90° 회전 · 아파트 단지는 동 방향 전환'], ['D', '철거 모드 켜기/끄기'], ['Ctrl + Z', '되돌리기'],
+    ['1 ~ 9, 0', '건물 카테고리 선택 (0 = 농업)'], ['Shift + 1 ~ 0', '카테고리 안 세부 건물 선택 (칩 번호 순서)'], ['← / →', '카테고리 묶음 넘기기'],
+    ['↑ / ↓', `건물 방향 ${S.rotStep}° 회전 (↑ 시계, ↓ 반시계) · 설정 > 회전에서 바꿔요`], ['R', '건물 방향 90° 회전 · 아파트 단지는 동 방향 전환'], ['D', '철거 모드 켜기/끄기'], ['Ctrl + Z', '되돌리기'],
     ['Esc', '둘러보기로 전환 · 설정 닫기'], ['우클릭', '둘러보기로 전환 (그리던 단지 구역 취소)'], ['우클릭(드래그)', '지도 회전'],
     ['좌클릭', '건물 설치 · 철거 모드에서 철거'], ['좌클릭(드래그)', '지도 이동 · 아파트 모드에서는 단지 구역 그리기'], ['마우스 휠', '확대 / 축소'], ['+ / −', '확대 / 축소'],
   ];
+  const seg = (host, vals, cur, fmt, on) => { host.innerHTML = ''; for (const v of vals) { const b = document.createElement('button'); b.type = 'button'; b.textContent = fmt(v); b.setAttribute('aria-pressed', v === cur); b.onclick = () => on(v); host.append(b); } };
+  seg($('exagSeg'), [1, 1.6, 2.5, 4], EXAG, v => `${v}배`, v => { setExag(v); renderSettings(); });
+  seg($('rotSeg'), [1, 5, 10, 30, 45, 90], S.rotStep, v => `${v}°`, v => { S.rotStep = v; try { localStorage.setItem('cityplan:rotStep', v); } catch (e) {} renderSettings(); });
   const tb = $('keyRows'); tb.innerHTML = '';
   for (const [k, d] of keys) { const tr = document.createElement('tr'); const a = document.createElement('td'); const b = document.createElement('td');
     a.innerHTML = k.split(' / ').map(x => x.split(' + ').map(y => `<kbd class="k">${y}</kbd>`).join(' + ')).join(' / '); b.textContent = d; tr.append(a, b); tb.append(tr); }
@@ -1464,6 +1682,193 @@ $('realCity').onclick = async () => {
   updateDock();
 };
 
+/* ---------- own building dialog ---------- */
+function parseColor(v) {
+  v = (v || '').trim(); if (!v) return null;
+  let m = /^(\d{1,3})\s*[, ]\s*(\d{1,3})\s*[, ]\s*(\d{1,3})$/.exec(v); if (m) v = `rgb(${m[1]},${m[2]},${m[3]})`;
+  if (/^[0-9a-f]{3}([0-9a-f]{3})?$/i.test(v)) v = '#' + v;
+  const probe = new Option().style; probe.color = ''; probe.color = v; if (!probe.color) return null;
+  const c = new THREE.Color(); try { c.setStyle(probe.color); } catch (e) { return null; }
+  return '#' + c.getHexString();
+}
+function openMine() {
+  if (hasMine()) return;
+  $('mineErr').textContent = ''; $('mineModal').hidden = false;
+  const last = (() => { try { return JSON.parse(localStorage.getItem('cityplan:mine') || 'null'); } catch (e) { return null; } })();
+  if (last) { $('mineName').value = last.name; $('mineColor').value = last.raw; }
+  $('mineColor').dispatchEvent(new Event('input')); setTimeout(() => $('mineName').focus(), 30);
+}
+$('mineBtn').onclick = openMine;
+$('mineCancel').onclick = () => { $('mineModal').hidden = true; };
+$('mineColor').addEventListener('input', () => { const c = parseColor($('mineColor').value); $('mineSwatch').style.background = c || 'transparent'; });
+$('mineForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = $('mineName').value.trim(); const col = parseColor($('mineColor').value);
+  if (!name) { $('mineErr').textContent = '이름을 입력해 주세요.'; return; }
+  if (!col) { $('mineErr').textContent = '색을 알아볼 수 없어요. 예: #ff7850, rgb(255,120,80), coral'; return; }
+  try { localStorage.setItem('cityplan:mine', JSON.stringify({ name, raw: $('mineColor').value })); } catch (e2) {}
+  S.mineSpec = { name, color: col }; $('mineModal').hidden = true;
+  S.item = 'mine'; S.cat = 'mine'; setMode('build'); $('sub').hidden = true;
+  toast('파란색 땅을 클릭해서 자기만의 건물을 놓으세요. ↑/↓·R로 돌릴 수 있어요.');
+});
+
+/* ---------- terrain height setting ---------- */
+function setExag(v) {
+  if (v === EXAG) return;
+  EXAG = v; try { localStorage.setItem('cityplan:exag', v); } catch (e) {}
+  if (!S.M) return;
+  const T = S.M.terrain, pos = terrainMesh.geometry.attributes.position;
+  for (let k = 0; k < T.w * T.h; k++) pos.array[k * 3 + 1] = S.heights[k] * EXAG;
+  pos.needsUpdate = true; terrainMesh.geometry.computeVertexNormals(); terrainMesh.geometry.computeBoundingSphere();
+  buildRoads(S.roads);
+  while (keptGroup.children.length) keptGroup.remove(keptGroup.children[0]); buildKept();
+  const list = [...S.buildings.values()].map(e => e.b); for (const b of list) removeBuilding(b.id); smoke = []; for (const b of list) addBuilding(b);
+  if (realBuilt) { while (realGroup.children.length) { const m = realGroup.children.pop(); m.geometry.dispose(); } realBuilt = false; if (S.real) { S.real = false; $('realCity').click(); } }
+  buildLabels(); buildPeaks(); buildPlaces(); paintDongs(); updateOverlayVisibility(); trees.last = null;
+  if (S.night) applyLights(true);
+  controls.target.y = heightAt(controls.target.x, -controls.target.z);
+  toast(`지형 높이를 ${v}배로 바꿨어요.`);
+}
+
+/* ---------- trees on forest and mountain land, near the camera ---------- */
+const trees = { mesh: null, last: null };
+function updateTrees() {
+  if (!S.M) return;
+  const t = controls.target, dist = camera.position.distanceTo(t);
+  const show = dist < 4500 && !S.real;
+  if (trees.mesh) trees.mesh.visible = show;
+  if (!show) return;
+  if (trees.last && Math.hypot(trees.last.x - t.x, trees.last.z - t.z) < 350 && Math.abs(trees.last.d - dist) < dist * 0.4) return;
+  trees.last = { x: t.x, z: t.z, d: dist };
+  const M = S.M, R = Math.min(2200, Math.max(900, dist * 1.1)), step = dist < 1500 ? 2 : 3;
+  const ci = Math.floor((t.x - M.xmin) / M.cell), cj = Math.floor((M.ymax + t.z) / M.cell), rc = Math.ceil(R / M.cell);
+  const pts = [];
+  for (let j = cj - rc; j <= cj + rc; j += step) for (let i = ci - rc; i <= ci + rc; i += step) {
+    if (i < 0 || j < 0 || i >= M.W || j >= M.H) continue;
+    const c = S.cls[j * M.W + i]; if (c !== C.FOREST && c !== C.STEEP) continue;
+    const h = Math.sin(i * 12.9898 + j * 78.233) * 43758.5453; const r = h - Math.floor(h);
+    if (c === C.STEEP && r < 0.35) continue;
+    const x = M.xmin + (i + r) * M.cell, yN = M.ymax - (j + (r * 7 % 1)) * M.cell;
+    if ((x - t.x) ** 2 + (yN + t.z) ** 2 > R * R) continue;
+    pts.push([x, yN, r]); if (pts.length >= 9000) break;
+  }
+  if (!trees.mesh || trees.cap < pts.length) {
+    if (trees.mesh) { scene.remove(trees.mesh); trees.mesh.geometry.dispose(); }
+    const geo = new THREE.ConeGeometry(3.2, 9, 6); geo.translate(0, 4.5, 0);
+    trees.cap = Math.max(9000, pts.length);
+    trees.mesh = new THREE.InstancedMesh(geo, new THREE.MeshLambertMaterial({ color: '#ffffff' }), trees.cap);
+    trees.mesh.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(trees.cap * 3), 3);
+    scene.add(trees.mesh);
+  }
+  const M4 = new THREE.Matrix4(), q = new THREE.Quaternion(), col = new THREE.Color();
+  const greens = ['#4f8a4a', '#5d9852', '#46804a', '#6aa35a'];
+  pts.forEach(([x, yN, r], k) => { const s = 0.75 + r * 0.7; M4.compose(new THREE.Vector3(x, heightAt(x, yN) - 0.5, -yN), q, new THREE.Vector3(s, s * (0.9 + r * 0.4), s)); trees.mesh.setMatrixAt(k, M4); col.set(greens[Math.floor(r * 4) % 4]); trees.mesh.setColorAt(k, col); });
+  trees.mesh.count = pts.length; trees.mesh.instanceMatrix.needsUpdate = true; trees.mesh.instanceColor.needsUpdate = true;
+}
+
+/* ---------- search ---------- */
+const SKIND = { dong: '행정동', cityhall: '시청', university: '대학교', court: '법원', prison: '교정시설', peak: '산', addr: '주소', ...Object.fromEntries(Object.entries(PLACE_KINDS).map(([k, v]) => [k, v[0]])) };
+const norm = (s) => (s || '').toLowerCase().replace(/\s+/g, '');
+let addrIdx = null, addrLoading = null, searchHits = [], searchSel = -1, flashEl = null, flashTimer = null;
+function loadAddr() {
+  if (addrIdx || addrLoading) return addrLoading;
+  addrLoading = fetch(durl(S.region.code, 'addr')).then(r => r.json()).then(j => { addrIdx = j; addrIdx.key = j.e.map(e => norm(j.d[e[0]].split(' ').pop() + e[1])); addrIdx.key2 = j.e.map(e => norm(j.d[e[0]] + e[1])); }).catch(() => { addrIdx = { d: [], e: [], key: [], key2: [] }; });
+  return addrLoading;
+}
+function runSearch() {
+  const raw = $('searchBox').value; const q = norm(raw); const box = $('results');
+  if (!q) { box.hidden = true; searchHits = []; return; }
+  const hits = [];
+  for (const it of S.M.search || []) {
+    const n = norm(it.n); const i = n.indexOf(q); if (i < 0) continue;
+    hits.push({ ...it, score: (i === 0 ? 0 : 10) + n.length / 100 + (it.k === 'dong' ? 0.5 : 0) });
+  }
+  if (/\d/.test(q) && addrIdx) {
+    let c = 0;
+    for (let i = 0; i < addrIdx.e.length && c < 30; i++) {
+      if (addrIdx.key[i].includes(q) || addrIdx.key2[i].includes(q)) { const e = addrIdx.e[i]; hits.push({ k: 'addr', n: `${addrIdx.d[e[0]]} ${e[1]}`, x: e[2], y: e[3], r: 120, score: 5 + (addrIdx.key[i].startsWith(q) ? 0 : 3) }); c++; }
+    }
+  } else if (/\d/.test(q) && !addrIdx) loadAddr().then(runSearch);
+  hits.sort((a, b) => a.score - b.score);
+  const seen = new Set(); searchHits = hits.filter(h => { const k = h.k + h.n; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 9);
+  box.innerHTML = '';
+  if (!searchHits.length) { const d = document.createElement('div'); d.className = 'empty'; d.textContent = /\d/.test(q) && !addrIdx ? '주소 목록을 불러오는 중…' : '찾는 곳이 없어요. 이름 일부나 "동 이름 + 번지"로 검색해 보세요.'; box.append(d); }
+  searchHits.forEach((h, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'option'); b.setAttribute('aria-selected', i === searchSel);
+    const sm = document.createElement('small'); sm.textContent = (SKIND[h.k] || '장소') + (h.k === 'peak' ? ` · ${h.e}m` : '');
+    b.append(document.createTextNode(h.n), sm); b.onmousedown = (e) => { e.preventDefault(); goSearch(h); }; box.append(b);
+  });
+  box.hidden = false;
+}
+function goSearch(h) {
+  $('results').hidden = true; $('searchBox').value = h.n; $('searchBox').blur(); searchSel = -1;
+  const dFinal = Math.max(700, Math.min(9000, (h.r || 300) * 2.6));
+  flySwoop(h.x, h.y, dFinal);
+  if (flashEl) flashEl.el.remove(); clearTimeout(flashTimer);
+  const el = document.createElement('div'); el.className = 'plc flash'; const dot = document.createElement('i'); dot.style.background = 'var(--accent)'; el.append(dot, document.createTextNode(h.n)); $('labels').appendChild(el);
+  flashEl = { el, p: toWorld(h.x, h.y, heightAt(h.x, h.y) + 40) }; flashTimer = setTimeout(() => { el.remove(); flashEl = null; }, 5500);
+}
+/* zoom out like "전체 보기", glide over, then zoom in like "시청으로" */
+function flySwoop(x, yN, dFinal) {
+  const tgt = new THREE.Vector3(x, heightAt(x, yN), -yN);
+  const dir = camera.position.clone().sub(controls.target).normalize(); dir.y = Math.max(dir.y, 0.55); dir.normalize();
+  const endP = tgt.clone().add(dir.clone().multiplyScalar(dFinal));
+  if (reduceMotion) { controls.target.copy(tgt); camera.position.copy(endP); controls.update(); return; }
+  const M = S.M, span = Math.max(M.xmax - M.xmin, M.ymax - M.ymin);
+  const t0 = controls.target.clone(), d0 = camera.position.distanceTo(t0), far = t0.distanceTo(tgt);
+  const dTop = Math.max(d0, dFinal, Math.min(span * 1.05, far * 1.6 + dFinal));
+  const start = performance.now(), T1 = 1000, T2 = 1000;
+  const ease = (k) => k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+  (function step() {
+    const el = performance.now() - start; let tgtNow, dNow;
+    if (el < T1) { const k = ease(el / T1); tgtNow = t0.clone().lerp(tgt, k * 0.85); dNow = d0 + (dTop - d0) * Math.sin(k * Math.PI / 2); }
+    else { const k = ease(Math.min(1, (el - T1) / T2)); tgtNow = t0.clone().lerp(tgt, 0.85 + 0.15 * k); dNow = dTop + (dFinal - dTop) * k; }
+    controls.target.copy(tgtNow); camera.position.copy(tgtNow).add(dir.clone().multiplyScalar(dNow)); controls.update();
+    if (el < T1 + T2) requestAnimationFrame(step);
+  })();
+}
+$('searchBox').addEventListener('input', () => { searchSel = -1; clearTimeout(runSearch.t); runSearch.t = setTimeout(runSearch, 110); });
+$('searchBox').addEventListener('focus', () => { loadAddr(); if ($('searchBox').value) runSearch(); });
+$('searchBox').addEventListener('blur', () => setTimeout(() => { $('results').hidden = true; }, 120));
+$('searchBox').addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (!searchHits.length) return; searchSel = (searchSel + (e.key === 'ArrowDown' ? 1 : -1) + searchHits.length) % searchHits.length; [...$('results').querySelectorAll('button')].forEach((b, i) => b.setAttribute('aria-selected', i === searchSel)); }
+  else if (e.key === 'Enter') { e.preventDefault(); const h = searchHits[Math.max(0, searchSel)]; if (h) goSearch(h); }
+  else if (e.key === 'Escape') { $('results').hidden = true; $('searchBox').blur(); }
+});
+
+/* ---------- first visit: intro, then a short tour ---------- */
+const TOUR = [
+  ['region', '여기서 지역을 골라요. 지금은 진주시를 볼 수 있고, 다른 시·자치구는 차례로 추가돼요. 아래 검색창으로 산, 문화재, 역, 주소를 찾아 바로 이동할 수 있어요.'],
+  ['rail', '왼쪽 바로 확대·축소, 전체 보기, 북쪽 위로 되돌리기를 해요. 지도는 드래그해서 옮기고, 오른쪽 버튼을 누른 채 끌면 돌아가요.'],
+  ['dock', '아래에서 지을 건물 종류를 골라요. 숫자 키 1~0으로도 고를 수 있고, ←/→로 다음 묶음을 봐요. 파란 땅에만 지을 수 있고 빨간 땅은 산·숲·물·도로처럼 지을 수 없는 곳이에요.'],
+  ['t-apt', '아파트는 지도 위를 드래그해서 단지 구역을 그리면, 도로로 둘러싸인 블록 안에 동이 자동으로 채워져요.'],
+  ['t-undo', '잘못 지었으면 되돌리기(Ctrl+Z)를, 지은 건물을 없애려면 철거(D)를 써요. 작업 중 우클릭하면 바로 둘러보기로 돌아가요.'],
+  ['mineBtn', '자기만의 건물 짓기로 이름과 색을 정한 나만의 건물을 하나 지을 수 있어요. 낮/밤을 바꾸면 창문에 불이 켜져요.'],
+  ['realCity', '이 버튼으로 실제 건물이 모두 있는 진짜 도시와 비교해 보세요. 설정(톱니바퀴)에서 지형 높이, 회전 단위, 밤 불빛, 단축키를 볼 수 있어요.'],
+];
+let tourI = -1;
+function introSeen(v) { try { if (v) localStorage.setItem('cityplan:introSeen', '1'); return localStorage.getItem('cityplan:introSeen') === '1'; } catch (e) { return false; } }
+function showIntro() { $('introModal').hidden = false; setTimeout(() => $('introTour').focus(), 30); }
+function endTour() { tourI = -1; $('tutBubble').hidden = true; $('tutRing').hidden = true; introSeen(true); }
+function tourStep() {
+  if (tourI >= TOUR.length) { endTour(); toast('이제 자유롭게 지어 보세요.'); return; }
+  const [id, text] = TOUR[tourI]; let el = $(id);
+  if (id === 'region' || id === 'mineBtn') { $('headBody').hidden = false; $('foldHead').setAttribute('aria-expanded', 'true'); }
+  if (id === 't-apt' && !el) { S.page = 0; buildDock(); el = $(id); }
+  const r = el.getBoundingClientRect(); const ring = $('tutRing'); ring.hidden = false;
+  Object.assign(ring.style, { left: (r.left - 6) + 'px', top: (r.top - 6) + 'px', width: (r.width + 12) + 'px', height: (r.height + 12) + 'px' });
+  $('tutStep').textContent = `${tourI + 1} / ${TOUR.length}`; $('tutText').textContent = text; $('tutNext').textContent = tourI === TOUR.length - 1 ? '시작하기' : '다음';
+  const bb = $('tutBubble'); bb.hidden = false; const bw = bb.offsetWidth, bh = bb.offsetHeight;
+  let x = r.right + 16, y = r.top; if (x + bw > innerWidth - 16) { x = Math.max(16, Math.min(innerWidth - bw - 16, r.left)); y = r.top - bh - 16; if (y < 16) y = r.bottom + 16; }
+  bb.style.left = x + 'px'; bb.style.top = Math.max(16, Math.min(innerHeight - bh - 16, y)) + 'px'; $('tutNext').focus();
+}
+$('introSkip').onclick = () => { $('introModal').hidden = true; introSeen(true); };
+$('introTour').onclick = () => { $('introModal').hidden = true; tourI = 0; tourStep(); };
+$('tutNext').onclick = () => { tourI++; tourStep(); };
+$('tutSkip').onclick = endTour;
+$('replayTut').onclick = () => { openSettings(false); showIntro(); };
+addEventListener('resize', () => { if (tourI >= 0) tourStep(); });
+
 /* ---------- region loading ---------- */
 async function loadImageClasses(url, W, H) {
   const img = new Image(); img.crossOrigin = 'anonymous'; img.src = url; await img.decode();
@@ -1476,10 +1881,12 @@ async function loadImageClasses(url, W, H) {
 async function loadRegion(code) {
   $('loading').hidden = false;
   const r = REGIONS.find(r => r.code === code);
-  const [M, roadsBuf] = await Promise.all([
+  const [M, roadsBuf, shadeImg] = await Promise.all([
     fetch(durl(code, 'meta')).then(res => { if (!res.ok) throw new Error(res.status); return res.json(); }),
     fetchBin(durl(code, 'roads')),
+    (async () => { try { const im = new Image(); im.crossOrigin = 'anonymous'; im.src = durl(code, 'shade'); await im.decode(); return im; } catch (e) { return null; } })(),
   ]);
+  S.shadeImg = shadeImg; S.roads = parseRoads(roadsBuf);
   S.region = r; S.M = M; buildItems(M.catalog, M.cell);
   S.heights = decodeTerrain(M.terrain.b64);
   S.cls = await loadImageClasses(durl(code, 'class'), M.W, M.H);
@@ -1494,7 +1901,7 @@ async function loadRegion(code) {
   buildCanvas = null; realBuilt = false; S.real = false; realGroup.visible = false; userGroup.visible = true;
   terrainTex = paintBase();
   smoke = []; realRanges = []; realMeshes = [];
-  buildTerrain(); buildRoads(roadsBuf); buildKept(); buildLabels(); buildPeaks(); paintDongs();
+  buildTerrain(); buildRoads(S.roads); buildKept(); buildLabels(); buildPeaks(); buildPlaces(); paintDongs(); trees.last = null;
   S.buildings.clear(); S.history = []; S.nextId = 1;
   buildDock(); buildLegend();
   for (const b of load()) {
@@ -1511,8 +1918,10 @@ async function loadRegion(code) {
   const span = Math.max(M.xmax - M.xmin, M.ymax - M.ymin);
   camera.far = span * 6; camera.updateProjectionMatrix(); fogRange = [span * 0.9, span * 3]; applyTheme();
   const [hx, hy] = hallXY(); flyTo(hx, hy, 1100, true);
-  renderTally(); setMode('view'); if (S.night) applyLights(true);
+  renderTally(); setMode('view'); updateMineBtn(); if (S.night) applyLights(true);
+  addrIdx = null; addrLoading = null; $('searchBox').value = '';
   $('loading').hidden = true;
+  if (!introSeen()) showIntro();
 }
 
 /* ---------- loop ---------- */
@@ -1523,7 +1932,7 @@ function frame() {
   const ext = Math.min(Math.max(dist * 0.9, 500), 6000);
   sun.position.copy(t).addScaledVector(SUN_DIR, ext * 2); sun.target.position.copy(t);
   const sc = sun.shadow.camera; sc.left = -ext; sc.right = ext; sc.top = ext; sc.bottom = -ext; sc.near = 1; sc.far = ext * 5; sc.updateProjectionMatrix();
-  updateLabels();
+  updateLabels(); updateTrees();
   if (smoke.length && !reduceMotion) { const tt = performance.now() / 1000; for (const s of smoke) animateSmoke(tt, s); }
   renderer.render(scene, camera);
   requestAnimationFrame(frame);
@@ -1536,6 +1945,8 @@ async function loadRegionList() {
   } catch (e) { console.warn('regions.json을 읽지 못해 내장 목록을 써요.', e); }
 }
 const hashCode = /^#(\d{5})$/.exec(location.hash)?.[1];
+window.__city = { S, canPlaceB, place, ITEMS: () => ITEMS };   // handy for debugging in the console
+try { const v = parseFloat(localStorage.getItem('cityplan:exag')); if ([1, 1.6, 2.5, 4].includes(v)) EXAG = v; const r = parseInt(localStorage.getItem('cityplan:rotStep')); if ([1, 5, 10, 30, 45, 90].includes(r)) S.rotStep = r; } catch (e) {}
 await loadRegionList();
 buildRegionSelect();
 if (hashCode && AVAILABLE.has(hashCode)) $('region').value = hashCode;
