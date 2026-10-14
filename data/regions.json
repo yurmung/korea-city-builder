@@ -339,31 +339,31 @@
 "code": "12210",
 "sido": "전남광주통합특별시",
 "name": "동구",
-"ready": false
+"ready": true
 },
 {
 "code": "12240",
 "sido": "전남광주통합특별시",
 "name": "서구",
-"ready": false
+"ready": true
 },
 {
 "code": "12270",
 "sido": "전남광주통합특별시",
 "name": "남구",
-"ready": false
+"ready": true
 },
 {
 "code": "12300",
 "sido": "전남광주통합특별시",
 "name": "북구",
-"ready": false
+"ready": true
 },
 {
 "code": "12330",
 "sido": "전남광주통합특별시",
 "name": "광산구",
-"ready": false
+"ready": true
 },
 {
 "code": "30110",
@@ -699,91 +699,91 @@
 "code": "12110",
 "sido": "전남광주통합특별시",
 "name": "목포시",
-"ready": false
+"ready": true
 },
 {
 "code": "12130",
 "sido": "전남광주통합특별시",
 "name": "여수시",
-"ready": false
+"ready": true
 },
 {
 "code": "12150",
 "sido": "전남광주통합특별시",
 "name": "순천시",
-"ready": false
+"ready": true
 },
 {
 "code": "12170",
 "sido": "전남광주통합특별시",
 "name": "나주시",
-"ready": false
+"ready": true
 },
 {
 "code": "12190",
 "sido": "전남광주통합특별시",
 "name": "광양시",
-"ready": false
+"ready": true
 },
 {
 "code": "47110",
 "sido": "경상북도",
 "name": "포항시",
-"ready": false
+"ready": true
 },
 {
 "code": "47130",
 "sido": "경상북도",
 "name": "경주시",
-"ready": false
+"ready": true
 },
 {
 "code": "47150",
 "sido": "경상북도",
 "name": "김천시",
-"ready": false
+"ready": true
 },
 {
 "code": "47170",
 "sido": "경상북도",
 "name": "안동시",
-"ready": false
+"ready": true
 },
 {
 "code": "47190",
 "sido": "경상북도",
 "name": "구미시",
-"ready": false
+"ready": true
 },
 {
 "code": "47210",
 "sido": "경상북도",
 "name": "영주시",
-"ready": false
+"ready": true
 },
 {
 "code": "47230",
 "sido": "경상북도",
 "name": "영천시",
-"ready": false
+"ready": true
 },
 {
 "code": "47250",
 "sido": "경상북도",
 "name": "상주시",
-"ready": false
+"ready": true
 },
 {
 "code": "47280",
 "sido": "경상북도",
 "name": "문경시",
-"ready": false
+"ready": true
 },
 {
 "code": "47290",
 "sido": "경상북도",
 "name": "경산시",
-"ready": false
+"ready": true
 },
 {
 "code": "48170",
@@ -855,36 +855,36 @@
 "code": "52110",
 "sido": "전북특별자치도",
 "name": "전주시",
-"ready": false
+"ready": true
 },
 {
 "code": "52130",
 "sido": "전북특별자치도",
 "name": "군산시",
-"ready": false
+"ready": true
 },
 {
 "code": "52140",
 "sido": "전북특별자치도",
 "name": "익산시",
-"ready": false
+"ready": true
 },
 {
 "code": "52180",
 "sido": "전북특별자치도",
 "name": "정읍시",
-"ready": false
+"ready": true
 },
 {
 "code": "52190",
 "sido": "전북특별자치도",
 "name": "남원시",
-"ready": false
+"ready": true
 },
 {
 "code": "52210",
 "sido": "전북특별자치도",
 "name": "김제시",
-"ready": false
+"ready": true
 }
 ]
