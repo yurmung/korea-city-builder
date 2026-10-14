@@ -1462,7 +1462,7 @@ function zoomBy(f) {
   animateCam(t, t.clone().add(off.setLength(len)));
 }
 // regions whose city/district office is not in the data yet (newly created district, building under construction)
-const hallMissing = () => !!(S.M && !S.M.hall);
+const hallMissing = () => !!(S.M && S.M.hall === null);   // older data files have no 'hall' field at all
 function hallNotice() {
   const w = hallWord(), nm = (S.M && S.M.name) || '';
   return `${nm} ${w} 건물이 아직 지도 데이터에 없어요. 새로 생긴 ${nm.endsWith('구') ? '구' : '시'}이거나, 청사를 짓는 중이거나, 공개 데이터에 빠져 있는 경우예요. 그동안 '${w}으로'는 지역 한가운데로 가고, '자기만의 건물'은 표준 크기(92×68m)로 지어져요.`;
