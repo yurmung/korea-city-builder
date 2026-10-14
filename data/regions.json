@@ -243,97 +243,97 @@
 "code": "27110",
 "sido": "대구광역시",
 "name": "중구",
-"ready": false
+"ready": true
 },
 {
 "code": "27140",
 "sido": "대구광역시",
 "name": "동구",
-"ready": false
+"ready": true
 },
 {
 "code": "27170",
 "sido": "대구광역시",
 "name": "서구",
-"ready": false
+"ready": true
 },
 {
 "code": "27200",
 "sido": "대구광역시",
 "name": "남구",
-"ready": false
+"ready": true
 },
 {
 "code": "27230",
 "sido": "대구광역시",
 "name": "북구",
-"ready": false
+"ready": true
 },
 {
 "code": "27260",
 "sido": "대구광역시",
 "name": "수성구",
-"ready": false
+"ready": true
 },
 {
 "code": "27290",
 "sido": "대구광역시",
 "name": "달서구",
-"ready": false
+"ready": true
 },
 {
 "code": "28125",
 "sido": "인천광역시",
 "name": "제물포구",
-"ready": false
+"ready": true
 },
 {
 "code": "28155",
 "sido": "인천광역시",
 "name": "영종구",
-"ready": false
+"ready": true
 },
 {
 "code": "28177",
 "sido": "인천광역시",
 "name": "미추홀구",
-"ready": false
+"ready": true
 },
 {
 "code": "28185",
 "sido": "인천광역시",
 "name": "연수구",
-"ready": false
+"ready": true
 },
 {
 "code": "28200",
 "sido": "인천광역시",
 "name": "남동구",
-"ready": false
+"ready": true
 },
 {
 "code": "28237",
 "sido": "인천광역시",
 "name": "부평구",
-"ready": false
+"ready": true
 },
 {
 "code": "28245",
 "sido": "인천광역시",
 "name": "계양구",
-"ready": false
+"ready": true
 },
 {
 "code": "28275",
 "sido": "인천광역시",
 "name": "서해구",
-"ready": false
+"ready": true
 },
 {
 "code": "28290",
 "sido": "인천광역시",
 "name": "검단구",
-"ready": false
+"ready": true
 },
 {
 "code": "12210",
@@ -369,31 +369,31 @@
 "code": "30110",
 "sido": "대전광역시",
 "name": "동구",
-"ready": false
+"ready": true
 },
 {
 "code": "30140",
 "sido": "대전광역시",
 "name": "중구",
-"ready": false
+"ready": true
 },
 {
 "code": "30170",
 "sido": "대전광역시",
 "name": "서구",
-"ready": false
+"ready": true
 },
 {
 "code": "30200",
 "sido": "대전광역시",
 "name": "유성구",
-"ready": false
+"ready": true
 },
 {
 "code": "30230",
 "sido": "대전광역시",
 "name": "대덕구",
-"ready": false
+"ready": true
 },
 {
 "code": "31110",
@@ -423,7 +423,7 @@
 "code": "36110",
 "sido": "세종특별자치시",
 "name": "세종시",
-"ready": false
+"ready": true
 },
 {
 "code": "41110",
