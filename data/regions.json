@@ -3,151 +3,151 @@
 "code": "11110",
 "sido": "서울특별시",
 "name": "종로구",
-"ready": false
+"ready": true
 },
 {
 "code": "11140",
 "sido": "서울특별시",
 "name": "중구",
-"ready": false
+"ready": true
 },
 {
 "code": "11170",
 "sido": "서울특별시",
 "name": "용산구",
-"ready": false
+"ready": true
 },
 {
 "code": "11200",
 "sido": "서울특별시",
 "name": "성동구",
-"ready": false
+"ready": true
 },
 {
 "code": "11215",
 "sido": "서울특별시",
 "name": "광진구",
-"ready": false
+"ready": true
 },
 {
 "code": "11230",
 "sido": "서울특별시",
 "name": "동대문구",
-"ready": false
+"ready": true
 },
 {
 "code": "11260",
 "sido": "서울특별시",
 "name": "중랑구",
-"ready": false
+"ready": true
 },
 {
 "code": "11290",
 "sido": "서울특별시",
 "name": "성북구",
-"ready": false
+"ready": true
 },
 {
 "code": "11305",
 "sido": "서울특별시",
 "name": "강북구",
-"ready": false
+"ready": true
 },
 {
 "code": "11320",
 "sido": "서울특별시",
 "name": "도봉구",
-"ready": false
+"ready": true
 },
 {
 "code": "11350",
 "sido": "서울특별시",
 "name": "노원구",
-"ready": false
+"ready": true
 },
 {
 "code": "11380",
 "sido": "서울특별시",
 "name": "은평구",
-"ready": false
+"ready": true
 },
 {
 "code": "11410",
 "sido": "서울특별시",
 "name": "서대문구",
-"ready": false
+"ready": true
 },
 {
 "code": "11440",
 "sido": "서울특별시",
 "name": "마포구",
-"ready": false
+"ready": true
 },
 {
 "code": "11470",
 "sido": "서울특별시",
 "name": "양천구",
-"ready": false
+"ready": true
 },
 {
 "code": "11500",
 "sido": "서울특별시",
 "name": "강서구",
-"ready": false
+"ready": true
 },
 {
 "code": "11530",
 "sido": "서울특별시",
 "name": "구로구",
-"ready": false
+"ready": true
 },
 {
 "code": "11545",
 "sido": "서울특별시",
 "name": "금천구",
-"ready": false
+"ready": true
 },
 {
 "code": "11560",
 "sido": "서울특별시",
 "name": "영등포구",
-"ready": false
+"ready": true
 },
 {
 "code": "11590",
 "sido": "서울특별시",
 "name": "동작구",
-"ready": false
+"ready": true
 },
 {
 "code": "11620",
 "sido": "서울특별시",
 "name": "관악구",
-"ready": false
+"ready": true
 },
 {
 "code": "11650",
 "sido": "서울특별시",
 "name": "서초구",
-"ready": false
+"ready": true
 },
 {
 "code": "11680",
 "sido": "서울특별시",
 "name": "강남구",
-"ready": false
+"ready": true
 },
 {
 "code": "11710",
 "sido": "서울특별시",
 "name": "송파구",
-"ready": false
+"ready": true
 },
 {
 "code": "11740",
 "sido": "서울특별시",
 "name": "강동구",
-"ready": false
+"ready": true
 },
 {
 "code": "26110",
@@ -429,163 +429,163 @@
 "code": "41110",
 "sido": "경기도",
 "name": "수원시",
-"ready": false
+"ready": true
 },
 {
 "code": "41130",
 "sido": "경기도",
 "name": "성남시",
-"ready": false
+"ready": true
 },
 {
 "code": "41150",
 "sido": "경기도",
 "name": "의정부시",
-"ready": false
+"ready": true
 },
 {
 "code": "41170",
 "sido": "경기도",
 "name": "안양시",
-"ready": false
+"ready": true
 },
 {
 "code": "41210",
 "sido": "경기도",
 "name": "광명시",
-"ready": false
+"ready": true
 },
 {
 "code": "41220",
 "sido": "경기도",
 "name": "평택시",
-"ready": false
+"ready": true
 },
 {
 "code": "41250",
 "sido": "경기도",
 "name": "동두천시",
-"ready": false
+"ready": true
 },
 {
 "code": "41270",
 "sido": "경기도",
 "name": "안산시",
-"ready": false
+"ready": true
 },
 {
 "code": "41280",
 "sido": "경기도",
 "name": "고양시",
-"ready": false
+"ready": true
 },
 {
 "code": "41290",
 "sido": "경기도",
 "name": "과천시",
-"ready": false
+"ready": true
 },
 {
 "code": "41310",
 "sido": "경기도",
 "name": "구리시",
-"ready": false
+"ready": true
 },
 {
 "code": "41360",
 "sido": "경기도",
 "name": "남양주시",
-"ready": false
+"ready": true
 },
 {
 "code": "41370",
 "sido": "경기도",
 "name": "오산시",
-"ready": false
+"ready": true
 },
 {
 "code": "41390",
 "sido": "경기도",
 "name": "시흥시",
-"ready": false
+"ready": true
 },
 {
 "code": "41410",
 "sido": "경기도",
 "name": "군포시",
-"ready": false
+"ready": true
 },
 {
 "code": "41430",
 "sido": "경기도",
 "name": "의왕시",
-"ready": false
+"ready": true
 },
 {
 "code": "41450",
 "sido": "경기도",
 "name": "하남시",
-"ready": false
+"ready": true
 },
 {
 "code": "41460",
 "sido": "경기도",
 "name": "용인시",
-"ready": false
+"ready": true
 },
 {
 "code": "41480",
 "sido": "경기도",
 "name": "파주시",
-"ready": false
+"ready": true
 },
 {
 "code": "41500",
 "sido": "경기도",
 "name": "이천시",
-"ready": false
+"ready": true
 },
 {
 "code": "41550",
 "sido": "경기도",
 "name": "안성시",
-"ready": false
+"ready": true
 },
 {
 "code": "41570",
 "sido": "경기도",
 "name": "김포시",
-"ready": false
+"ready": true
 },
 {
 "code": "41590",
 "sido": "경기도",
 "name": "화성시",
-"ready": false
+"ready": true
 },
 {
 "code": "41610",
 "sido": "경기도",
 "name": "광주시",
-"ready": false
+"ready": true
 },
 {
 "code": "41630",
 "sido": "경기도",
 "name": "양주시",
-"ready": false
+"ready": true
 },
 {
 "code": "41650",
 "sido": "경기도",
 "name": "포천시",
-"ready": false
+"ready": true
 },
 {
 "code": "41670",
 "sido": "경기도",
 "name": "여주시",
-"ready": false
+"ready": true
 },
 {
 "code": "51110",
@@ -837,19 +837,19 @@
 "code": "50110",
 "sido": "제주특별자치도",
 "name": "제주시",
-"ready": false
+"ready": true
 },
 {
 "code": "50130",
 "sido": "제주특별자치도",
 "name": "서귀포시",
-"ready": false
+"ready": true
 },
 {
 "code": "41190",
 "sido": "경기도",
 "name": "부천시",
-"ready": false
+"ready": true
 },
 {
 "code": "52110",
