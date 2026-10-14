@@ -655,11 +655,12 @@ const ROAD_STYLE = [
   { w: 5.5, c: '#8a847c', lift: 1.0 }, { w: 4.5, c: '#8f8981', lift: 1.0 }, { w: 3.5, c: '#3f3a36', lift: 1.0 },
   { w: 45, c: '#4b4f55', lift: 0.8 }, { w: 22, c: '#6b7078', lift: 0.7 }, { w: 9, c: '#9a948a', lift: 0.6 },
 ];
-function parseRoads(buf) {
+function parseRoads(buf, fmt) {
   const dv = new DataView(buf); let o = 0; const n = dv.getUint32(o, true); o += 4; const out = [];
+  const wide = fmt === 32, step = wide ? 8 : 4;
   for (let r = 0; r < n; r++) {
     const cl = dv.getUint8(o), fl = dv.getUint8(o + 1), np = dv.getUint16(o + 2, true); o += 4;
-    const pts = []; for (let k = 0; k < np; k++) { pts.push([dv.getInt16(o, true), dv.getInt16(o + 2, true)]); o += 4; }
+    const pts = []; for (let k = 0; k < np; k++) { pts.push(wide ? [dv.getInt32(o, true), dv.getInt32(o + 4, true)] : [dv.getInt16(o, true), dv.getInt16(o + 2, true)]); o += step; }
     out.push({ cl, bridge: fl & 1, link: fl & 2, tunnel: fl & 4, layer: ((fl >> 4) & 15) - 8, pts });
   }
   return out;
@@ -2024,7 +2025,7 @@ async function loadRegion(code) {
     fetchBin(durl(code, 'roads')),
     (async () => { try { const im = new Image(); im.crossOrigin = 'anonymous'; im.src = durl(code, 'shade'); await im.decode(); return im; } catch (e) { return null; } })(),
   ]);
-  S.shadeImg = shadeImg; S.roads = parseRoads(roadsBuf);
+  S.shadeImg = shadeImg; S.roads = parseRoads(roadsBuf, M.roadFmt);
   S.region = r; S.M = M; buildItems(M.catalog, M.cell);
   S.heights = decodeTerrain(M.terrain.b64);
   S.cls = await loadImageClasses(durl(code, 'class'), M.W, M.H);
