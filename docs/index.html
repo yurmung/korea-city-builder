@@ -1009,11 +1009,21 @@ const REAL_COLOR = ['#dedad2', '#eadfca', '#e9e2d4', '#ead6d8', '#d6dfea', '#d3d
 const REAL_DEF_H = [6, 15, 6, 9, 14, 8, 10, 5];
 const REAL_LIGHT_CAT = ['house', 'apt', 'house', 'shop', 'school', 'work', 'kept', null];
 let realRanges = [], realMeshes = [];
+/* textures per register kind: 0 other, 1 apartments, 2 houses, 3 shops/hotels, 4 schools, 5 factories/warehouses, 6 public & other, 7 farm sheds */
+const REAL_TEX = [['stone', 'roofGray'], ['aptFront', 'roofGreen'], ['plaster', 'roofGreen'], ['shopUp', 'roofGray'], ['school', 'roofGreen'], ['metalWin', 'metal'], ['stone', 'roofGray'], ['metal', 'metal']];
+function realMats(kd) {
+  const [wt, rt] = REAL_TEX[kd], W = TX[wt](), R = TX[rt]();
+  const wall = nightify(new THREE.MeshLambertMaterial({ color: new THREE.Color(REAL_COLOR[kd]).lerp(new THREE.Color('#ffffff'), 0.55), map: W.tex, flatShading: true, side: THREE.DoubleSide }));
+  const roof = nightify(new THREE.MeshLambertMaterial({ color: rt === 'metal' ? '#9aa6b2' : '#ffffff', map: R.tex, flatShading: true, side: THREE.DoubleSide }));
+  return { wall, roof, tw: W.tw, th: W.th, rt: R.tw };
+}
 function buildReal(buf) {
   const dv = new DataView(buf); const n = dv.getUint32(0, true);
-  const nv = new Array(8).fill(0), ni = new Array(8).fill(0);
-  for (let b = 0, o = 4; b < n; b++) { const np = dv.getUint16(o, true), kd = dv.getUint8(o + 2) & 7; nv[kd] += 2 * np; ni[kd] += 6 * np + 3 * Math.max(0, np - 2); o += 14 + np * 4; }
-  const P = nv.map(c => new Float32Array(c * 3)), I = ni.map(c => new Uint32Array(c)), pv = new Array(8).fill(0), pi = new Array(8).fill(0);
+  const nv = new Array(8).fill(0), nw = new Array(8).fill(0), nr = new Array(8).fill(0);
+  for (let b = 0, o = 4; b < n; b++) { const np = dv.getUint16(o, true), kd = dv.getUint8(o + 2) & 7; if (np >= 3) { nv[kd] += 3 * np + 2; nw[kd] += 6 * np; nr[kd] += 3 * (np - 2); } o += 14 + np * 4; }
+  const MT = [...Array(8)].map((_, kd) => nv[kd] ? realMats(kd) : null);
+  const P = nv.map(c => new Float32Array(c * 3)), UV = nv.map(c => new Float32Array(c * 2)), IW = nw.map(c => new Uint32Array(c)), IR = nr.map(c => new Uint32Array(c));
+  const pv = new Array(8).fill(0), pw = new Array(8).fill(0), pr = new Array(8).fill(0);
   realRanges = [];
   for (let b = 0, o = 4; b < n; b++) {
     const np = dv.getUint16(o, true), kd = dv.getUint8(o + 2) & 7, lv = dv.getUint8(o + 3), hdm = dv.getUint16(o + 4, true);
@@ -1022,19 +1032,30 @@ function buildReal(buf) {
     if (np < 3) continue;
     let h = hdm >= 25 ? hdm / 10 : (lv ? lv * 3.2 : REAL_DEF_H[kd]); h = Math.min(h, 300);
     let base = Infinity; for (const p of pts) base = Math.min(base, heightAt(p.x, p.y)); base -= 1; const top = base + 1 + h;
-    const pos = P[kd], idx = I[kd]; const v0 = pv[kd] / 3; realRanges.push([kd, v0, 2 * np]);
-    for (const p of pts) { pos[pv[kd]++] = p.x; pos[pv[kd]++] = base; pos[pv[kd]++] = -p.y; pos[pv[kd]++] = p.x; pos[pv[kd]++] = top; pos[pv[kd]++] = -p.y; }
-    for (let k = 0; k < np; k++) { const a = v0 + 2 * k, c = v0 + 2 * ((k + 1) % np); idx[pi[kd]++] = a; idx[pi[kd]++] = c; idx[pi[kd]++] = c + 1; idx[pi[kd]++] = a; idx[pi[kd]++] = c + 1; idx[pi[kd]++] = a + 1; }
+    const mt = MT[kd], pos = P[kd], uv = UV[kd]; let q = pv[kd]; const v0 = q;
+    realRanges.push([kd, v0, 3 * np + 2]);
+    // walls: the ring is closed with a copy of the first corner so the texture runs round the building without a seam
+    const vTop = Math.max(1, Math.round((h + 1) / mt.th)); let per = 0;
+    for (let k = 0; k <= np; k++) {
+      const p = pts[k % np]; if (k) per += pts[k - 1].distanceTo(p); const u = per / mt.tw;
+      pos.set([p.x, base, -p.y, p.x, top, -p.y], q * 3); uv.set([u, 0, u, vTop], q * 2); q += 2;
+    }
+    const iw = IW[kd]; for (let k = 0; k < np; k++) { const a = v0 + 2 * k, c = a + 2; iw.set([a, c, c + 1, a, c + 1, a + 1], pw[kd]); pw[kd] += 6; }
+    // roof cap with its own vertices (roof texture in metres)
+    const r0 = q; for (const p of pts) { pos.set([p.x, top, -p.y], q * 3); uv.set([p.x / mt.rt, p.y / mt.rt], q * 2); q++; }
     let tris; try { tris = THREE.ShapeUtils.triangulateShape(pts, []); } catch (e) { tris = []; }
-    for (const [i0, i1, i2] of tris) { if (pi[kd] + 3 > idx.length) break; idx[pi[kd]++] = v0 + 2 * i0 + 1; idx[pi[kd]++] = v0 + 2 * i1 + 1; idx[pi[kd]++] = v0 + 2 * i2 + 1; }
+    const ir = IR[kd]; for (const [i0, i1, i2] of tris) { if (pr[kd] + 3 > ir.length) break; ir.set([r0 + i0, r0 + i1, r0 + i2], pr[kd]); pr[kd] += 3; }
+    pv[kd] = q;
   }
   for (let kd = 0; kd < 8; kd++) {
-    if (!pi[kd]) continue;
+    if (!pw[kd]) continue;
+    const idx = new Uint32Array(pw[kd] + pr[kd]); idx.set(IW[kd].subarray(0, pw[kd])); idx.set(IR[kd].subarray(0, pr[kd]), pw[kd]);
     const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(P[kd], 3)); geo.setIndex(new THREE.BufferAttribute(I[kd], 1)); geo.setDrawRange(0, pi[kd]);
+    geo.setAttribute('position', new THREE.BufferAttribute(P[kd], 3)); geo.setAttribute('uv', new THREE.BufferAttribute(UV[kd], 2)); geo.setIndex(new THREE.BufferAttribute(idx, 1));
+    geo.addGroup(0, pw[kd], 0); geo.addGroup(pw[kd], pr[kd], 1);
     geo.setAttribute('aLit', new THREE.BufferAttribute(new Float32Array(nv[kd]), 1));
     geo.computeBoundingSphere();
-    const m = new THREE.Mesh(geo, nightify(new THREE.MeshLambertMaterial({ color: REAL_COLOR[kd], flatShading: true, side: THREE.DoubleSide })));
+    const m = new THREE.Mesh(geo, [MT[kd].wall, MT[kd].roof]);
     m.castShadow = m.receiveShadow = true; m.userData.kind = kd; realMeshes[kd] = m; realGroup.add(m);
   }
   return n;
@@ -2764,7 +2785,7 @@ function setExag(v) {
   buildRoads(S.roads);
   while (keptGroup.children.length) keptGroup.children.pop().geometry.dispose(); buildKept();
   const list = [...S.buildings.values()].map(e => e.b); for (const b of list) removeBuilding(b.id); smoke = []; for (const b of list) addBuilding(b);
-  if (realBuilt) { while (realGroup.children.length) { const m = realGroup.children.pop(); m.geometry.dispose(); } realBuilt = false; if (S.real) { S.real = false; $('realCity').click(); } }
+  if (realBuilt) { while (realGroup.children.length) { const m = realGroup.children.pop(); m.geometry.dispose(); (Array.isArray(m.material) ? m.material : [m.material]).forEach(x => x.dispose()); } realBuilt = false; if (S.real) { S.real = false; $('realCity').click(); } }
   buildLabels(); buildPeaks(); buildPlaces(); paintDongs(); updateOverlayVisibility(); trees.last = null;
   if (S.night) applyLights(true);
   controls.target.y = heightAt(controls.target.x, -controls.target.z);
@@ -3135,7 +3156,9 @@ async function loadRegion(code) {
   if (!S.lights) S.lights = loadLightPrefs();
   S.GW = M.W; S.GH = M.H; S.occ = new Int32Array(S.GW * S.GH);
   let nb = 0; for (let i = 0; i < S.cls.length; i++) if (isLand(S.cls[i]) && S.dist[i] <= M.access) nb++;
-  for (const g of [keptGroup, userGroup, realGroup]) while (g.children.length) g.remove(g.children[0]);
+  while (realGroup.children.length) { const m = realGroup.children.pop(); m.geometry.dispose(); (Array.isArray(m.material) ? m.material : [m.material]).forEach(x => x.dispose()); }
+  while (keptGroup.children.length) keptGroup.children.pop().geometry.dispose();
+  for (const g of [userGroup]) while (g.children.length) g.remove(g.children[0]);
   if (terrainMesh) { world.remove(terrainMesh, buildOv, dongOv); terrainMesh.geometry.dispose(); }
   buildCanvas = null; realBuilt = false; S.real = false; realGroup.visible = false; userGroup.visible = true;
   terrainTex = paintBase();
